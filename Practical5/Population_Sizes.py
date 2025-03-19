@@ -20,20 +20,26 @@ def list_percentage_calculator(list):
 UK_countries_percentage = list_percentage_calculator(UK_countries)
 China_provinces_percentage = list_percentage_calculator(China_provinces)
 
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5)) 
+
 labels = ['Northern Ireland','Wales','Scotland','England']
 sizes = UK_countries_percentage
 explode = (0.25,0.1,0.1,0)
-plt.pie(sizes, explode = explode, labels = labels,
-        autopct = '%1.1f%%', shadow = False, startangle = 90)
-plt.axis('equal')
-
-plt.show()
+colors = ['#999999', '#E69F00', '#56B4E9', '#009E73']
+ax1.pie(sizes, explode = explode, labels = labels, 
+        autopct = '%1.1f%%', colors = colors, 
+        shadow = False, startangle = 90)
+ax1.axis('equal')
 
 labels = ['Fujian','Jiangxi','Anhui','Zhejiang','Jiangsu']
 sizes = China_provinces_percentage
-explode = (0,0,0,0,0)
-plt.pie(sizes, explode = explode, labels = labels,
-        autopct = '%1.1f%%', shadow = False, startangle = 90)
-plt.axis('equal')
+explode = (0.1,0.1,0,0,0.05)
+colors = ['#999999', '#E69F00', '#56B4E9', '#009E73', '#F0E442']
+ax2.pie(sizes, explode = explode, labels = labels,
+        autopct = '%1.1f%%', colors = colors, 
+        shadow = False, startangle = 90)
+ax2.axis('equal')
 
+plt.tight_layout()
 plt.show()
+
