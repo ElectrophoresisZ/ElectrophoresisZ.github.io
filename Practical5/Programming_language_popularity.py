@@ -27,8 +27,9 @@ plt.title('Program Language Popularity', size=20)
 #show the picture
 plt.show()
 
-
+#select the program language
 select_language = 'select_language'
+#print the percentage of the selected language
 print('The percentage of developer who uses ' + select_language +' is:' + str(program_language[select_language]) + '%.')
 
 
