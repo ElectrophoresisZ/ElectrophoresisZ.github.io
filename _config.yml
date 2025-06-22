@@ -17,7 +17,7 @@ header_pages:
   #- about.md # 关于页面 
   - Table-Contents.md # 笔记目录 
   - 说明.md # 新增资源页面（需确保该文件存在）
-  - R统计基础语句.html
+  #- R统计基础语句.html
 
 # 插件配置（增强功能）
 plugins:
