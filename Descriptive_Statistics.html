@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Descriptive Statistics</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 2rem;
+        }
+        .floor {
+            margin-bottom: 3rem;
+            border-left: 4px solid #007bff;
+            padding-left: 1rem;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 0.5rem;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin: 0.8rem 0;
+        }
+        .math {
+            font-family: "Courier New", monospace;
+            color: #27ae60;
+        }
+        .highlight {
+            background-color: #f8f9fa;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="floor">
+        <h1>The First Floor: Descriptive Statistics</h1>
+        <ul>
+            <li>Give clues to principle trends</li>
+            <li>Suggest hints and more detailed look</li>
+            <li>Caption, unit, axis: well labeled</li>
+            <li>Statistical term: well defined</li>
+            
+            <li><strong>Measure of Location</strong>
+                <ul>
+                    <li>Define the middle
+                        <ul>
+                            <li>Arithmetic mean</li>
+                            <li>Median (insensitive to extreme values)</li>
+                            <li>Mode</li>
+                            <li>Geometric mean (serial dilution)
+                                <div class="math">log(y) = (1/n)Σ(log(x<sub>i</sub>)), i=1,2...n</div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <li><strong>Measure of Spread</strong>
+                <ul>
+                    <li>Range (largest-smallest)</li>
+                    <li>Quantiles</li>
+                    <li>Variance and Standard Deviation
+                        <ul>
+                            <li>Mean Deviation: <span class="math">Σ(|x<sub>i</sub> - x̄|/n)</span></li>
+                            <li>Sample Variance: <span class="math">Σ((x<sub>i</sub> - x̄)<sup>2</sup>)/(n-1)</span></li>
+                            <li>Sample Standard Deviation: <span class="math">√(Sample Variance)</span></li>
+                        </ul>
+                    </li>
+                    <li>Coefficient of Variation: <span class="math">(s/x̄)×100%</span></li>
+                </ul>
+            </li>
+
+            <li><strong>Grouped Data</strong></li>
+
+            <li><strong>Graphic Methods</strong>
+                <ul>
+                    <li>Bar Graph</li>
+                    <li>Stem-and-Leaf Plot</li>
+                    <li>Box Plot (inspect the skewness and outliers)
+                        <ul>
+                            <li>Extreme Outliers: 
+                                <span class="math">upper + 3×IQR</span> or 
+                                <span class="math">lower - 3×IQR</span>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
