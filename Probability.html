@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Probability Framework</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 2rem;
+        }
+        .floor {
+            margin-bottom: 3rem;
+            border-left: 4px solid #007bff;
+            padding-left: 1rem;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 0.5rem;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin: 0.8rem 0;
+        }
+        .math {
+            font-family: "Courier New", monospace;
+            color: #27ae60;
+            white-space: nowrap;
+        }
+        .highlight {
+            background-color: #f8f9fa;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="floor">
+        <h1>The Second Floor: Probability</h1>
+        <ul>
+            <li><strong>Definition</strong>
+                <ul>
+                    <li>Sample Space: set of all possible outcomes</li>
+                    <li>Event: subset of sample space</li>
+                    <li>Probability: relative frequency over infinite trials</li>
+                    <li>Exclusive Events</li>
+                </ul>
+            </li>
+
+            <li><strong>Notation</strong>
+                <ul>
+                    <li>and, or, complement</li>
+                </ul>
+            </li>
+
+            <li><strong>Probabilistic Law</strong>
+                <ul>
+                    <li>Multiplication
+                        <ul>
+                            <li>Independent Events: <span class="math">P(A ∧ B) = P(A) × P(B)</span></li>
+                        </ul>
+                    </li>
+                    <li>Addition
+                        <ul>
+                            <li><span class="math">Pr(A ∨ B) = Pr(A) + Pr(B) - Pr(A ∧ B)</span></li>
+                            <li>Independent Events: <span class="math">Pr(A ∨ B) = Pr(A) + Pr(B) × (1-Pr(A))</span></li>
+                        </ul>
+                    </li>
+                    <li>Conditional Probability
+                        <ul>
+                            <li><span class="math">Pr(A|B) = Pr(A ∧ B) / Pr(B)</span></li>
+                            <li>Independent Events: <span class="math">Pr(B|A) = Pr(B) = Pr(B|¬A)</span></li>
+                            <li>Relative Risk of B given A: <span class="math">Pr(B|A) / Pr(B|¬A)</span></li>
+                        </ul>
+                    </li>
+                    <li>Total-Probability Rule
+                        <ul>
+                            <li><span class="math">Pr(B) = Pr(B|A)Pr(A) + Pr(B|¬A)Pr(¬A)</span></li>
+                            <li><span class="math">Pr(B) = Σ[Pr(B|A=aᵢ) × Pr(A=aᵢ)]</span> (i=1,2,3...n)</li>
+                        </ul>
+                    </li>
+                    <li>Generalized Multiplication Law
+                        <ul>
+                            <li><span class="math">Pr(A₁∧A₂∧...∧Aₙ) = P(A₁) × P(A₂|A₁) × P(A₃|A₁∧A₂) × ... × P(Aₙ|A₁∧A₂∧...∧Aₙ₋₁)</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <li><strong>Bayes' Rule and Screening Tests</strong>
+                <ul>
+                    <li>Predictive value positive (PV+): <span class="math">Pr(disease|test+)</span></li>
+                    <li>Predictive value negative (PV-): <span class="math">Pr(¬disease|test-)</span></li>
+                    <li>Sensitivity
+                        <ul>
+                            <li><span class="math">true⁺ / (true⁺ + false⁻)</span></li>
+                            <li><span class="math">Pr(test+|disease)</span></li>
+                        </ul>
+                    </li>
+                    <li>Specificity
+                        <ul>
+                            <li><span class="math">true⁻ / (true⁻ + false⁺)</span></li>
+                            <li><span class="math">Pr(test-|¬disease)</span></li>
+                        </ul>
+                    </li>
+                    <li>Bayes' Rule
+                        <ul>
+                            <li>A: test⁺, B: disease⁺</li>
+                            <li><span class="math">PV+ = Pr(B|A) = [Pr(A|B) × Pr(B)] / [Pr(A|B)Pr(B) + Pr(A|¬B)Pr(¬B)]</span></li>
+                            <li><span class="math">PV+ = [sensitivity × Pr(B)] / [sensitivity×Pr(B) + (1-specificity)×Pr(¬B)]</span></li>
+                            <li><span class="math">PV- = [specificity × Pr(¬B)] / [specificity×Pr(¬B) + (1-sensitivity)×Pr(B)]</span></li>
+                        </ul>
+                    </li>
+                    <li>Generalized Bayes' Rule
+                        <ul>
+                            <li><span class="math">Pr(Bᵢ|A) = [Pr(A|Bᵢ)Pr(Bᵢ)] / Σ[Pr(A|Bⱼ)Pr(Bⱼ)]</span> (j=1,2,3...k)</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <li><strong>Bayesian Inference</strong>
+                <ul>
+                    <li>Prior probability</li>
+                    <li>Posterior probability: include PV+, PV-...</li>
+                </ul>
+            </li>
+
+            <li><strong>ROC Curve: Receiver Operating Characteristic</strong>
+                <ul>
+                    <li>x axis: 1-specificity; false⁺ rate</li>
+                    <li>y axis: sensitivity; true⁺ rate</li>
+                    <li>AUC: Area Under Curve
+                        <ul>
+                            <li><span class="highlight">AUC > 0.9: good classifier</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <li><strong>Prevalence and Incidence</strong>
+                <ul>
+                    <li>Incidence: cumulative incidence</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
