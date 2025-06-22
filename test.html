@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Learning Notes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 2rem;
+        }
+        .floor {
+            margin-bottom: 3rem;
+            border-left: 4px solid #007bff;
+            padding-left: 1rem;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 0.5rem;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 1.5rem;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin: 0.5rem 0;
+        }
+        .math {
+            font-family: "Courier New", monospace;
+            color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <div class="floor">
+        <h1>The First Floor: Introduction</h1>
+        <ul>
+            <li><strong>Email Spam</strong> (supervised learning)
+                <ul><li>Classification problem</li></ul>
+            </li>
+            <li><strong>Prostate Cancer</strong> (supervised learning)
+                <ul><li>Regression problem: quantitative outcome</li></ul>
+            </li>
+            <li><strong>Handwritten Digit Recognition</strong>
+                <ul><li>Classification problem</li></ul>
+            </li>
+            <li><strong>DNA Expression Microarrays</strong> (unsupervised learning)
+                <ul><li>Cluster together</li></ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="floor">
+        <h1>The Second Floor: Overview of Supervised Learning</h1>
+        <ul>
+            <li>Use the inputs (predictors) to predict the output (response)</li>
+            <li><strong>Variable Types and Terminology</strong>
+                <ul>
+                    <li>Quantitative output: regression</li>
+                    <li>Qualitative output: classification</li>
+                    <li>Dummy Variable</li>
+                    <li>X predict 'ŷ', categorical output transformed into dummy variable</li>
+                </ul>
+            </li>
+            <li><strong>Two Prediction Approaches</strong>
+                <ul>
+                    <li><em>Least Squares:</em> linear model
+                        <ul>
+                            <li class="math">ŷ = b₀ + b₁X₁ + b₂X₂ + ... + bₚXₙ</li>
+                            <li class="math">ŷ = X<sup>T</sup>β</li>
+                            <li>b₀: intercept, bias in machine learning</li>
+                            <li><strong>Residual Sum of Squares (RSS):</strong>
+                                <ul>
+                                    <li class="math">RSS = Σ(yᵢ - ŷ)²</li>
+                                    <li class="math">RSS = (y - Xβ)<sup>T</sup>(y - Xβ)</li>
+                                    <li>Differentiating w.r.t. β gives the normal equation</li>
+                                    <li class="math">X<sup>T</sup>(y - Xβ) = 0</li>
+                                    <li class="math">β = (X<sup>T</sup>X)<sup>-1</sup> X<sup>T</sup>y</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><em>Nearest Neighbors:</em> k-nearest-neighbor prediction rule
+                        <ul>
+                            <li class="math">ŷ = 1/k Σyᵢ (xᵢ ∈ Nₖ(x))</li>
+                            <li>Find k-nearest neighbors of x in training set and then vote</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li><strong>From Least Squares to Nearest Neighbors</strong></li>
+            <li><strong>Statistical Learning Theory</strong></li>
+        </ul>
+    </div>
+</body>
+</html>
