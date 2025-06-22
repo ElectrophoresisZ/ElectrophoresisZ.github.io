@@ -5,7 +5,7 @@
 # 网站基本信息
 title: 我的技术笔记           # 网站标题（更聚焦技术方向）
 description: >-             # 网站描述（优化SEO关键词）
-  记录编程学习、算法实践与技术工具的笔记，涵盖Python/JavaScript/数学等内容
+  记录编程学习、算法实践与技术工具的笔记，涵盖R/JavaScript/数学等内容
 url: "https://ElectrophoresisZ.github.io"  
 
 # 主题配置（保持Cayman主题，适合技术笔记）
