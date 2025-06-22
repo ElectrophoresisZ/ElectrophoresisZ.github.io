@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>基因组学概论</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            line-height: 1.8;
+            margin: 2rem;
+            max-width: 800px;
+        }
+        .floor {
+            margin-bottom: 3rem;
+            border-left: 4px solid #4CAF50;
+            padding-left: 1.5rem;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #7f8c8d;
+            padding-bottom: 0.8rem;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 1.8rem;
+        }
+        li {
+            margin: 1rem 0;
+            position: relative;
+        }
+        .tech-term {
+            color: #c0392b;
+            font-weight: 600;
+        }
+        .formula {
+            font-family: "Consolas", monospace;
+            background-color: #f9f9f9;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+        }
+        .sub-list {
+            border-left: 2px dashed #95a5a6;
+            margin-left: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="floor">
+        <h1>第一层：基因组学概论</h1>
+        <ul>
+            <li><strong>人类基因组</strong>
+                <ul class="sub-list">
+                    <li><span class="formula">表型 = 基因型 + 环境 + 生活史 + 表观遗传学</span></li>
+                    <li>生活史：生物体的经历、生理、心理环境的总和</li>
+                </ul>
+            </li>
+
+            <li><strong>人类基因组内容</strong>
+                <ul class="sub-list">
+                    <li>蛋白质编码区</li>
+                    <li>基因组区域编码不能翻译蛋白质的RNA</li>
+                    <li>负责转录调控的配体结合位点</li>
+                    <li>重复元件
+                        <ul class="sub-list">
+                            <li>中度重复序列
+                                <ul class="sub-list">
+                                    <li>分散基因家族，由基因复制后转移产生</li>
+                                    <li>串联基因家族阵列</li>
+                                    <li>部分功能未知</li>
+                                </ul>
+                            </li>
+                            <li>高度重复序列
+                                <ul class="sub-list">
+                                    <li>小卫星</li>
+                                    <li>微卫星：大多围绕在着丝粒周围</li>
+                                    <li>端粒</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <li><strong>编码蛋白质组的基因</strong>
+                <ul class="sub-list">
+                    <li>人类：23,000个编码蛋白质的基因</li>
+                </ul>
+            </li>
+
+            <li><strong>基因组结构种类</strong>
+                <ul class="sub-list">
+                    <li>蛋白质编码区</li>
+                    <li>非蛋白质编码区</li>
+                    <li>调控互作靶标区域</li>
+                    <li>基因组基因识别
+                        <ul class="sub-list">
+                            <li>先验法：识别能够表达基因的序列模式及其侧翼区域</li>
+                            <li>推理法：通过已知物种的蛋白质信息进行推断</li>
+                        </ul>
+                    </li>
+                    <li>表达序列标签：转录基因的一部分，如<span class="tech-term">cDNA</span>的末端片段</li>
+                    <li>转座子
+                        <ul class="sub-list">
+                            <li>反转录转座子：由RNA介导</li>
+                            <li>DNA转座子：编码转座酶，直接切除并转移</li>
+                            <li>生物效应：序列散播；改变基因特性；进化引擎等</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <li><strong>基因组测序计划</strong>
+                <ul class="sub-list">
+                    <li><span class="tech-term">单端读序列</span>：单末端测序</li>
+                    <li><span class="tech-term">双端读序列</span>：双末端测序</li>
+                    <li>读序列长（读长）</li>
+                    <li><span class="tech-term">重叠群(contig)</span>：序列拼接结果</li>
+                    <li><span class="tech-term">从头测序</span>：无参考序列的测序</li>
+                    <li><span class="tech-term">重测序</span>：基于参考基因组的测序</li>
+                    <li><span class="tech-term">外显子组测序</span></li>
+                    <li><span class="tech-term">SNP</span>：单核苷酸多态性</li>
+                    <li><span class="tech-term">ChIP-seq</span>：染色质免疫沉淀测序</li>
+                    <li>甲基化模式鉴定：重硫酸盐处理比较法</li>
+                </ul>
+            </li>
+
+            <li><strong>数据库的进化和发展</strong>
+                <ul class="sub-list">
+                    <li>数据来源
+                        <ul class="sub-list">
+                            <li>系统基因组测序</li>
+                            <li>蛋白质表达模式</li>
+                            <li>代谢路径</li>
+                            <li>蛋白质互作网络</li>
+                            <li>科学文献</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
