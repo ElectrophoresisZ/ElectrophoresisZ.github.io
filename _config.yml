@@ -1,10 +1,44 @@
-remote_theme: pages-themes/midnight@v0.2.0
-plugins:
-- jekyll-remote-theme # add this line to the plugins list if you already have one
+#remote_theme: pages-themes/midnight@v0.2.0
+#plugins:
+#- jekyll-remote-theme # add this line to the plugins list if you already have one
 
-header_pages: 
-- index.md # 首页 
-#- about.md # 关于页面 
-- Table-Contents.md # 笔记目录 
-- 说明.md # 新增资源页面（需确保该文件存在）
-- R统计基础语句.html
+# 网站基本信息
+title: 我的技术笔记           # 网站标题（更聚焦技术方向）
+description: >-             # 网站描述（优化SEO关键词）
+  记录编程学习、算法实践与技术工具的笔记，涵盖Python/JavaScript/数学等内容
+url: "https://ElectrophoresisZ.github.io"  
+
+# 主题配置（保持Cayman主题，适合技术笔记）
+remote_theme: pages-themes/cayman@v0.2.0  
+
+# 导航菜单配置（补充分类，更清晰）
+header_pages:
+  - index.md # 首页 
+  #- about.md # 关于页面 
+  - Table-Contents.md # 笔记目录 
+  - 说明.md # 新增资源页面（需确保该文件存在）
+  - R统计基础语句.html
+
+# 插件配置（增强功能）
+plugins:
+  - jekyll-seo-tag           # SEO优化
+  - jekyll-sitemap           # 生成站点地图
+  - jekyll-feed              # 生成RSS订阅
+  - jekyll-toc               # 新增目录生成插件（自动为文章生成内页目录）
+
+# 其他配置（重点修改permalink格式）
+markdown: kramdown           
+highlighter: rouge          
+permalink: /notes/:categories/:title/  # 核心修改：按分类/标题生成链接，更简洁
+
+# 新增分类配置（配合permalink使用）
+collections:
+  programming:
+    output: true
+    permalink: /notes/programming/:title/
+  math:
+    output: true
+    permalink: /notes/math/:title/
+  tools:
+    output: true
+    permalink: /notes/tools/:title/
