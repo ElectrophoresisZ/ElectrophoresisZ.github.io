@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Discrete Probability Distributions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 2rem;
+        }
+        .floor {
+            margin-bottom: 3rem;
+            border-left: 4px solid #007bff;
+            padding-left: 1rem;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 0.5rem;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin: 0.8rem 0;
+        }
+        .math {
+            font-family: "Courier New", monospace;
+            color: #27ae60;
+            white-space: nowrap;
+        }
+        .highlight {
+            background-color: #f8f9fa;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="floor">
+        <h1>The Third Floor: Discrete Probability Distributions</h1>
+        <ul>
+            <li><strong>Random Variable</strong>: a function that assigns numeric values to different events in a sample space
+                <ul>
+                    <li>Discrete</li>
+                    <li>Continuous</li>
+                </ul>
+            </li>
+
+            <li><strong>Probability-Mass Function (PMF)</strong> for Discrete Random Variables
+                <ul><li>PMF: <span class="math">Pr(X=x)</span>; theoretical</li></ul>
+            </li>
+
+            <li><strong>Expected Value</strong></li>
+
+            <li><strong>Variance</strong>: <span class="math">Var(X) = E[(X-E(X))<sup>2</sup>]</span></li>
+
+            <li><strong>Standard Deviation</strong></li>
+
+            <li><strong>Cumulative-Distribution Function</strong></li>
+
+            <li><strong>Permutation and Combination</strong>
+                <ul>
+                    <li>Permutation: <span class="math"><sup>n</sup>P<sub>k</sub> = n! / (n-k)!</span></li>
+                    <li>n!: n factorial</li>
+                    <li>Combination: <span class="math"><sup>n</sup>C<sub>k</sub> = n! / (k! × (n-k)!) = <sup>n</sup>P<sub>k</sub> / k!</span></li>
+                </ul>
+            </li>
+
+            <li><strong>Binomial Distribution</strong>
+                <ul>
+                    <li>n trials, two possible outcomes (success or failure)</li>
+                    <li><span class="math">Pr(X=k) = C(n,k) × p<sup>k</sup> × (1-p)<sup>n-k</sup> = Pr(Y=n-k)</span></li>
+                    <li>Expected Value: <span class="math">E(X) = n × p</span></li>
+                    <li>Variance: <span class="math">Var(X) = n × p × (1-p)</span></li>
+                </ul>
+            </li>
+
+            <li><strong>Poisson Distribution</strong>
+                <ul>
+                    <li>k events occurring in time period t; λ = expected events per unit time</li>
+                    <li><span class="math">Pr(X=k) = e<sup>-μ</sup> × μ<sup>k</sup> / k!</span>, k=0,1,2,3...</li>
+                    <li><span class="math">μ = λ × t</span></li>
+                    <li>Example
+                        <ul>
+                            <li><span class="math">μ = 4.6</span>, t = 1 year</li>
+                            <li><span class="math">λ = μ × t = 4.6 deaths/year</span></li>
+                            <li>If Δt = 6-month: <span class="math">μ = 2.3</span></li>
+                            <li><span class="math">Pr(X=k) = e<sup>-2.3</sup> × 2.3<sup>k</sup> / k!</span></li>
+                        </ul>
+                    </li>
+                    <li>Expected Value: <span class="math">E(X) = μ</span></li>
+                    <li>Variance: <span class="math">Var(X) = μ</span></li>
+                </ul>
+            </li>
+
+            <li><strong>Poisson Approximation to the Binomial Distribution</strong>
+                <ul>
+                    <li>Binomial Distribution with large n and small p</li>
+                    <li>Poisson Distribution with <span class="math">μ = np</span> (easier to work with)</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
