@@ -5,6 +5,6 @@ plugins:
 header_pages: 
 - index.md # 首页 
 #- about.md # 关于页面 
-#- notes/table-of-contents.md # 笔记目录 
+- Table-Contents.md # 笔记目录 
 - 说明.md # 新增资源页面（需确保该文件存在）
 - R统计基础语句.html
