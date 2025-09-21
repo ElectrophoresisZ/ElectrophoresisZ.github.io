@@ -1,18 +1,19 @@
-## Welcome 
-
-My name is ZFY. 
-I am an IBI1 student at the Zhejiang University - University of Edinburgh (ZJE) Institute.
-
-<div style="text-align: right;">
-  <img src="/Rover.jpg" alt="个人标签" style="width: 500px; height: 350px; border-radius: 50%; border: 2px solid #fff;">
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <div>
+        <h1>Welcome</h1>
+        <p>My name is Feiyang Zhang, studying in Zhejiang University & University of Edinburgh.</p>
+    </div>
+    <div>
+        <img src="Rover.jpg" alt="个人标签" style="width: 200px; height: 140px; border-radius: 50%; border: 2px solid #fff;">
+    </div>
 </div>
 
 # Practices
 
-## GSE163151
+## Modeling of the COVID-19 Dataset
 - [Random_Forest](Random_Forest.R)
 
-## GSE21422
+## Fundamental Process Using Datasets of Breast Cancer
 - [Data_Processing](Data_Processing_Note1.rmd)
 - [DEA](Differential_Expression_Analysis_Note1.Rmd)
 - [Enrichment](Function_Note1.Rmd)
