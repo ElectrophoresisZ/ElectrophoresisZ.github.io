@@ -1,33 +1,47 @@
-#remote_theme: pages-themes/midnight@v0.2.0
-#plugins:
-#- jekyll-remote-theme # add this line to the plugins list if you already have one
-
 # 网站基本信息
-title: 我的技术笔记           # 网站标题（更聚焦技术方向）
-description: >-             # 网站描述（优化SEO关键词）
-  记录编程学习、算法实践与技术工具的笔记，涵盖R/JavaScript/数学等内容
-url: "https://ElectrophoresisZ.github.io"  
+title: My notes
+description: >-
+  Programming and Experiments for Bioinformatics
+url: "https://ElectrophoresisZ.github.io"
+baseurl: ""  # 保持为空，适合根域名
 
-# 主题配置（保持Cayman主题，适合技术笔记）
-remote_theme: pages-themes/cayman@v0.2.0  
+# 主题配置
+remote_theme: pages-themes/cayman@v0.2.0
+# 自定义配色（覆盖 Cayman 默认绿色）
+cayman:
+  colors:
+    background: "#f6f8fa"  # 浅灰背景，柔和且专业
+    header: "linear-gradient(135deg, #2b5797, #1b3a6b)"  # 深蓝渐变，科研感
+    link: "#005b96"  # 链接蓝色，清晰高亮
+    link-hover: "#003087"  # 悬停深蓝，增加交互
+    code: "#f8f9fa"  # 代码背景浅灰
+    code-text: "#333"  # 代码文字深灰
+  font-family: "'Roboto', -apple-system, BlinkMacSystemFont, sans-serif"  # 现代字体
 
-# 导航菜单配置（补充分类，更清晰）
+# 导航菜单（更清晰，添加分类页面）
 header_pages:
-  - index.md # 首页 
+  - index.md
+  - programming.md
+  - math.md
+  - tools.md
 
-# 插件配置（增强功能）
+# 插件配置
 plugins:
-  - jekyll-seo-tag           # SEO优化
-  - jekyll-sitemap           # 生成站点地图
-  - jekyll-feed              # 生成RSS订阅
-  - jekyll-toc               # 新增目录生成插件（自动为文章生成内页目录）
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-toc  # 自动目录（GitHub Pages 默认不支持，需确认）
 
-# 其他配置（重点修改permalink格式）
-markdown: kramdown           
-highlighter: rouge          
-permalink: /notes/:categories/:title/  # 核心修改：按分类/标题生成链接，更简洁
+# Markdown 和高亮
+markdown: kramdown
+kramdown:
+  toc_levels: 2..3  # 目录支持 h2, h3
+highlighter: rouge
 
-# 新增分类配置（配合permalink使用）
+# 链接格式
+permalink: /notes/:categories/:title/
+
+# 分类配置
 collections:
   programming:
     output: true
@@ -38,3 +52,29 @@ collections:
   tools:
     output: true
     permalink: /notes/tools/:title/
+
+# 默认布局
+defaults:
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: default
+  - scope:
+      path: ""
+      type: programming
+    values:
+      layout: default
+      category: Programming
+  - scope:
+      path: ""
+      type: math
+    values:
+      layout: default
+      category: Math
+  - scope:
+      path: ""
+      type: tools
+    values:
+      layout: default
+      category: Tools
