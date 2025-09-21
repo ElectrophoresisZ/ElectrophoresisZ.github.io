@@ -1,10 +1,13 @@
-<div style="display: flex; justify-content: flex-end; margin-right: 20px;">
-    <img src="Rover.jpg" alt="个人标签" style="width: 257px; height: 180px; border-radius: 50%; border: 2px solid #fff; object-fit: cover; min-width: 200px;">
-</div>
-<div style="clear: both;"></div>
-<h1>Welcome</h1>
-<p>My name is Feiyang Zhang, an undergraduate in Zhejiang University & University of Edinburgh. I major in bioinformatics and enjoy analyzing the complicated genomics data yo find some inspired ideas. In addition, badminton is my favorite sport and I'm open to any communication of skills. Furthermore, playing the piano could be my third hobby if free, which may detach me from the heavy burdens. My favorite video game is Wuthering Wave, which offers me a wonderland to travel and relax.</p>
 
+<div style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <div style="flex: 1; max-width: 70%;">
+        <h1>Welcome</h1>
+        <p>My name is Feiyang Zhang, an undergraduate in Zhejiang University & University of Edinburgh. I major in bioinformatics and enjoy analyzing the complicated genomics data yo find some inspired ideas. In addition, badminton is my favorite sport and I'm open to any communication of skills. Furthermore, playing the piano could be my third hobby if free, which may detach me from the heavy burdens. My favorite video game is Wuthering Wave, which offers me a wonderland to travel and relax.</p>
+    </div>
+    <div style="flex: 0 0 220px; margin-right: 30px;">
+        <img src="Rover.jpg" alt="个人标签" style="width: 257px; height: 180px; border-radius: 50%; border: 2px solid #fff; object-fit: cover;">
+    </div>
+</div>
 
 # Research Interests
 - In lymphangioleiomyomatosis (LAM), are there genes or molecular mechanisms capable of compensating for or regulating the loss of TSC1/TSC2 that leads to mTORC1 suppression?
