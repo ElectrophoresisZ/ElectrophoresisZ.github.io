@@ -3,6 +3,10 @@
 My name is ZFY. 
 I am an IBI1 student at the Zhejiang University - University of Edinburgh (ZJE) Institute.
 
+<div style="text-align: right;">
+  <img src="/Rover.jpg" alt="个人标签" style="width: 500px; height: 350px; border-radius: 50%; border: 2px solid #fff;">
+</div>
+
 # Practices
 
 ## GSE163151
@@ -16,6 +20,4 @@ I am an IBI1 student at the Zhejiang University - University of Edinburgh (ZJE) 
 You can see the ZJE website [here](https://zje.zju.edu.cn/zje/main.htm) 
 
 
-<div style="text-align: right;">
-  <img src="/Rover.jpg" alt="个人标签" style="width: 120px; height: 120px; border-radius: 50%; border: 2px solid #fff;">
-</div>
+
