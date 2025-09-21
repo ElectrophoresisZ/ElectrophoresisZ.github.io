@@ -4,7 +4,7 @@
         <p>My name is Feiyang Zhang, studying in Zhejiang University & University of Edinburgh.</p>
     </div>
     <div>
-        <img src="Rover.jpg" alt="个人标签" style="width: 200px; height: 140px; border-radius: 50%; border: 2px solid #fff;">
+        <img src="Rover.jpg" alt="个人标签" style="width: 200px; height: 200px; border-radius: 50%; border: 2px solid #fff;">
     </div>
 </div>
 
