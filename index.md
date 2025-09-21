@@ -23,8 +23,8 @@
 # Research Experience
 
 ## Lymphangioleiomyomatosis
-- [Subtype Classification of Macrophages in Lymphangioleiomyomatosis]
-- [Cell Chat between Lymphangioleiomyomatosis Cells]
+- [Subtype_Classification_of_Macrophages_in_Lymphangioleiomyomatosis]
+- [Cell_Chat_between_Lymphangioleiomyomatosis_Cells]
 
 ## Personal Practices
 
