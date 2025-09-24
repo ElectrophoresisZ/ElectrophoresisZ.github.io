@@ -1,0 +1,32 @@
+---
+title: "Introduction for the World in Mingchao"
+output: html_document
+date: "2025-09-24"
+---
+
+Special Vidao Take You Through the World of Mingchao:
+
+# [不知不觉，寻寻觅觅已过千帆] (https://www.bilibili.com/video/BV1pahHzfE6x/?spm_id_from=333.1007.top_right_bar_window_custom_collection.content.click&vd_source=1da39dc25cf99f0b6d11289648c59e79)
+
+You must be impressed by the conditions and customs there!
+
+
+```{r}
+
+```
+
+
+
+
+
+```{r}
+
+```
+
+
+
+```{r}
+
+```
+
+
