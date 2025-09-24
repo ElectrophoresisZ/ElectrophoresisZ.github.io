@@ -455,236 +455,191 @@
   <!-- JavaScript -->
   <script>
     // 花瓣粒子类
-    class Petal {
-      constructor(canvas) {
-        this.canvas = canvas;
-        this.ctx = canvas.getContext('2d');
-        this.reset();
-      }
-      
-      // 初始化/重置花瓣属性
-      reset() {
-        // 位置
-        this.x = Math.random() * this.canvas.width;
-        this.y = Math.random() * -this.canvas.height; // 从画布上方开始
-        
-        // 大小
-        this.size = Math.random() * 8 + 4; // 4-12px
-        
-        // 速度
-        this.speedX = Math.random() * 0.5 - 0.25; // 左右飘动
-        this.speedY = Math.random() * 1 + 0.5; // 下落速度
-        
-        // 旋转
-        this.rotation = Math.random() * Math.PI * 2;
-        this.rotationSpeed = Math.random() * 0.02 - 0.01;
-        
-        // 透明度
-        this.alpha = Math.random() * 0.5 + 0.3; // 0.3-0.8
-        
-        // 颜色 - 粉色系花瓣
-        const colors = [
-          'rgba(255, 183, 197, alpha)',   // 浅粉色
-          'rgba(255, 105, 180, alpha)',   // 热粉色
-          'rgba(219, 112, 147, alpha)',   // 淡紫色
-          'rgba(255, 160, 122, alpha)',   // 浅珊瑚色
-          'rgba(255, 218, 185, alpha)'    // 桃色
-        ];
-        this.color = colors[Math.floor(Math.random() * colors.length)].replace('alpha', this.alpha);
-      }
-      
-      // 更新花瓣位置和状态
-      update(wind) {
-        // 应用风力影响
-        this.x += this.speedX + wind;
-        this.y += this.speedY;
-        this.rotation += this.rotationSpeed;
-        
-        // 当花瓣飞出画布时重置
-        if (this.y > this.canvas.height || this.x < -this.size || this.x > this.canvas.width + this.size) {
-          this.reset();
-        }
-      }
-      
-      // 绘制花瓣
-      draw() {
-        this.ctx.save();
-        this.ctx.globalAlpha = this.alpha;
-        this.ctx.fillStyle = this.color;
-        this.ctx.translate(this.x, this.y);
-        this.ctx.rotate(this.rotation);
-        
-        // 绘制花瓣形状 (简化的花瓣路径)
-        this.ctx.beginPath();
-        this.ctx.ellipse(0, 0, this.size, this.size * 1.5, 0, 0, Math.PI * 2);
-        this.ctx.fill();
-        
-        this.ctx.restore();
-      }
-    }
-    
-    // 花瓣系统
-    class PetalSystem {
-      constructor() {
-        this.canvas = document.getElementById('petal-canvas');
-        this.ctx = this.canvas.getContext('2d');
-        this.petals = [];
-        this.wind = 0;
-        this.windTimer = 0;
-        
-        this.resizeCanvas();
-        this.initPetals();
-        this.animate();
-        
-        // 监听窗口大小变化
-        window.addEventListener('resize', () => this.resizeCanvas());
-      }
-      
-      // 调整画布大小以匹配窗口
-      resizeCanvas() {
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
-      }
-      
-      // 初始化花瓣
-      initPetals() {
-        const petalCount = Math.floor((this.canvas.width * this.canvas.height) / 50000); // 根据屏幕大小确定花瓣数量
-        for (let i = 0; i < petalCount; i++) {
-          this.petals.push(new Petal(this.canvas));
-        }
-      }
-      
-      // 随机风力变化
-      updateWind() {
-        this.windTimer++;
-        if (this.windTimer > 60) { // 每60帧更新一次风力
-          this.wind = (Math.random() - 0.5) * 0.8; // -0.4 到 0.4 之间的风力
-          this.windTimer = 0;
-        }
-      }
-      
-      // 动画循环
-      animate() {
-        // 清空画布
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        
-        // 更新风力
-        this.updateWind();
-        
-        // 更新和绘制所有花瓣
-        for (const petal of this.petals) {
-          petal.update(this.wind);
-          petal.draw();
+    class Star {
+        constructor(canvas) {
+            this.canvas = canvas;
+            this.ctx = canvas.getContext('2d');
+            this.reset();
         }
         
-        // 请求下一帧动画
-        requestAnimationFrame(() => this.animate());
-      }
-    }
-    
-    // 页面滚动动画
-    function setupScrollAnimations() {
-      const fadeElements = document.querySelectorAll('.fade-in');
-      
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('appear');
-          }
-        });
-      }, { threshold: 0.1 });
-      
-      fadeElements.forEach(element => {
-        observer.observe(element);
-      });
-    }
-    
-    // 导航栏滚动效果
-    function setupNavbarScroll() {
-      const navbar = document.getElementById('navbar');
-      
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-          navbar.classList.add('bg-dark/80');
-          navbar.classList.remove('py-4');
-          navbar.classList.add('py-2');
-        } else {
-          navbar.classList.remove('bg-dark/80');
-          navbar.classList.add('py-4');
-          navbar.classList.remove('py-2');
+        // 初始化/重置星星属性
+        reset() {
+            // 位置 - 随机分布在画布上
+            this.x = Math.random() * this.canvas.width;
+            this.y = Math.random() * this.canvas.height;
+            
+            // 大小 - 不同大小的星星
+            this.size = Math.random() * 3 + 0.5; // 0.5-3.5px
+            
+            // 亮度/透明度 - 营造闪烁效果的基础
+            this.alpha = Math.random() * 0.8 + 0.2; // 0.2-1.0
+            this.baseAlpha = this.alpha; // 保存基础透明度用于闪烁
+            
+            // 闪烁效果参数
+            this.twinkleSpeed = Math.random() * 0.02 + 0.005; // 闪烁速度
+            this.twinkleOffset = Math.random() * Math.PI * 2; // 闪烁相位偏移
+            
+            // 颜色 - 星空颜色（白色、淡蓝色、淡黄色）
+            const colors = [
+                'rgba(255, 255, 255, alpha)',    // 纯白色
+                'rgba(200, 220, 255, alpha)',    // 淡蓝色
+                'rgba(255, 250, 200, alpha)',    // 淡黄色
+                'rgba(255, 255, 240, alpha)',    // 象牙白
+                'rgba(220, 240, 255, alpha)'     // 天蓝色
+            ];
+            this.color = colors[Math.floor(Math.random() * colors.length)].replace('alpha', this.alpha);
+            
+            // 星星类型：有些星星有光晕效果
+            this.hasHalo = Math.random() > 0.7; // 30%的星星有光晕
+            this.haloSize = this.size * (Math.random() * 2 + 3); // 光晕大小
         }
-      });
-    }
-    
-    // 移动端菜单切换
-    function setupMobileMenu() {
-      const menuToggle = document.getElementById('menu-toggle');
-      const mobileMenu = document.getElementById('mobile-menu');
-      
-      menuToggle.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-        const icon = menuToggle.querySelector('i');
-        if (mobileMenu.classList.contains('hidden')) {
-          icon.classList.remove('fa-times');
-          icon.classList.add('fa-bars');
-        } else {
-          icon.classList.remove('fa-bars');
-          icon.classList.add('fa-times');
+        
+        // 更新星星状态（主要是闪烁效果）
+        update(time) {
+            // 闪烁效果：使用正弦波模拟自然的闪烁
+            const twinkle = Math.sin(time * this.twinkleSpeed + this.twinkleOffset) * 0.3 + 0.7;
+            this.alpha = this.baseAlpha * twinkle;
+            
+            // 更新颜色中的透明度
+            this.color = this.color.replace(/[\d\.]+\)$/, this.alpha + ')');
         }
-      });
-    }
-    
-    // 初始化语言图表
-    function initLanguagesChart() {
-      const ctx = document.getElementById('languages-chart').getContext('2d');
-      
-      new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          labels: ['JavaScript', 'TypeScript', 'HTML/CSS', 'Python', '其他'],
-          datasets: [{
-            data: [40, 20, 15, 15, 10],
-            backgroundColor: [
-              '#F7DF1E', // JavaScript 黄色
-              '#3178C6', // TypeScript 蓝色
-              '#E34F26', // HTML 红色
-              '#3776AB', // Python 蓝色
-              '#808080'  // 其他 灰色
-            ],
-            borderWidth: 0,
-            hoverOffset: 4
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              position: 'bottom',
-              labels: {
-                color: '#F7F7F9',
-                padding: 15,
-                font: {
-                  size: 11
-                }
-              }
+        
+        // 绘制星星
+        draw() {
+            this.ctx.save();
+            
+            // 如果有光晕，先绘制光晕
+            if (this.hasHalo) {
+                const haloGradient = this.ctx.createRadialGradient(
+                    this.x, this.y, 0,
+                    this.x, this.y, this.haloSize
+                );
+                haloGradient.addColorStop(0, this.color.replace('alpha', this.alpha * 0.3));
+                haloGradient.addColorStop(1, this.color.replace('alpha', 0));
+                
+                this.ctx.fillStyle = haloGradient;
+                this.ctx.beginPath();
+                this.ctx.arc(this.x, this.y, this.haloSize, 0, Math.PI * 2);
+                this.ctx.fill();
             }
-          },
-          cutout: '70%'
+            
+            // 绘制星星主体
+            this.ctx.fillStyle = this.color;
+            this.ctx.beginPath();
+            
+            // 随机绘制不同形状的星星
+            if (Math.random() > 0.3) {
+                // 70%的概率绘制圆形星星
+                this.ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            } else {
+                // 30%的概率绘制星形
+                this.drawStarShape(this.x, this.y, this.size);
+            }
+            
+            this.ctx.fill();
+            this.ctx.restore();
         }
-      });
+        
+        // 绘制星形（四角星或六角星）
+        drawStarShape(x, y, size) {
+            const points = Math.random() > 0.5 ? 4 : 6; // 四角星或六角星
+            const outerRadius = size;
+            const innerRadius = size * 0.5;
+            
+            this.ctx.beginPath();
+            
+            for (let i = 0; i < points * 2; i++) {
+                const radius = i % 2 === 0 ? outerRadius : innerRadius;
+                const angle = (Math.PI * i) / points;
+                
+                const px = x + Math.cos(angle) * radius;
+                const py = y + Math.sin(angle) * radius;
+                
+                if (i === 0) {
+                    this.ctx.moveTo(px, py);
+                } else {
+                    this.ctx.lineTo(px, py);
+                }
+            }
+            
+            this.ctx.closePath();
+        }
     }
-    
-    // 页面加载完成后初始化
-    window.addEventListener('DOMContentLoaded', () => {
-      // 初始化花瓣系统
-      new PetalSystem();
-      
-      // 初始化其他功能
-      setupScrollAnimations();
-      setupNavbarScroll();
-      setupMobileMenu();
-      initLanguagesChart();
+
+    // 星空背景管理器
+    class Starfield {
+        constructor(canvas, starCount = 200) {
+            this.canvas = canvas;
+            this.ctx = canvas.getContext('2d');
+            this.stars = [];
+            this.time = 0;
+            
+            // 创建星星
+            for (let i = 0; i < starCount; i++) {
+                this.stars.push(new Star(canvas));
+            }
+            
+            // 绘制星空背景
+            this.drawBackground();
+        }
+        
+        // 绘制深空背景（渐变）
+        drawBackground() {
+            const gradient = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
+            gradient.addColorStop(0, '#0a0a2a');    // 深蓝色
+            gradient.addColorStop(0.5, '#1a1a3a');  // 中蓝色
+            gradient.addColorStop(1, '#2a2a4a');    // 浅蓝色
+            
+            this.ctx.fillStyle = gradient;
+            this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        }
+        
+        // 更新星空
+        update() {
+            this.time += 0.01;
+            
+            // 更新所有星星
+            this.stars.forEach(star => {
+                star.update(this.time);
+            });
+        }
+        
+        // 绘制星空
+        draw() {
+            // 清除画布并重绘背景
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.drawBackground();
+            
+            // 绘制所有星星
+            this.stars.forEach(star => {
+                star.draw();
+            });
+        }
+        
+        // 动画循环
+        animate() {
+            this.update();
+            this.draw();
+            requestAnimationFrame(() => this.animate());
+        }
+        
+        // 响应画布大小变化
+        resize() {
+            this.drawBackground();
+            // 可以在这里添加星星位置的重置逻辑
+        }
+    }
+
+    // 使用示例
+    const canvas = document.getElementById('starCanvas');
+    const starfield = new Starfield(canvas, 300); // 创建300颗星星
+    starfield.animate(); // 开始动画
+
+    // 响应窗口大小变化
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        starfield.resize();
     });
   </script>
 </body>
