@@ -1,3 +1,7 @@
+---
+layout: default
+title: My Github Page
+---
 
 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
     <div style="flex: 1; max-width: 70%;">
@@ -5,7 +9,7 @@
         <p>My name is Feiyang Zhang, an undergraduate in Zhejiang University & University of Edinburgh. I major in bioinformatics and enjoy analyzing the complicated genomics data yo find some inspired ideas. In addition, badminton is my favorite sport and I'm open to any communication of skills. Furthermore, playing the piano could be my third hobby if free, which may detach me from the heavy burdens. My favorite video game is Wuthering Wave, which offers me a wonderland to travel and relax.</p>
     </div>
     <div style="flex: 0 0 220px; margin-right: 30px;">
-        <img src="Rover.jpg" alt="个人标签" style="width: 257px; height: 180px; border-radius: 50%; border: 2px solid #fff; object-fit: cover;">
+        <img src="images\Rover.jpg" alt="个人标签" style="width: 257px; height: 180px; border-radius: 50%; border: 2px solid #fff; object-fit: cover;">
     </div>
 </div>
 
