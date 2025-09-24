@@ -1,0 +1,129 @@
+---
+title: "Differential Expression Analysis"
+output: html_document
+date: "2025-06-22"
+---
+
+还是以GSE21422为例，下载路径在数据预处理文件中
+
+确定差异的判断标准，准备设计矩阵
+
+```{r}
+# 清空环境变量
+rm(list=ls())
+
+# 读取经过处理后的数据终文件并检查列内容
+GSE21422 <- read.table("GSE21422_final_rma.txt",header=TRUE,sep="\t")
+names(GSE21422)
+# 运行先前从平台上整合的数据表
+load("pdata_GSE21422.Rdata")
+# 分别计算不同病情下样本数量
+table(pdata_GSE21422[,'source_name_ch1'])
+#   DCIS healthy   tumor  
+#      9       5       5 
+
+# 根据计数结果规定健康标准，设定一个包含不同病情的向量
+sign=c(rep('DCIS', 9), rep("healthy",5),rep("tumor",5))
+# 创建一个19*3的矩阵，将先前设定的sign转化为因子形式并修改列标题
+design <- model.matrix(~0+factor(sign))
+colnames(design) <- c("DCIS","healthy",'tumor')
+```
+
+通过设计矩阵拟合各个基因表达的线性模型，再通过对比矩阵重新拟合基因表达差异的线性模型
+
+```{r}
+library(limma)
+# 对每个基因表达值（已经过log2处理）作线性模型拟合
+# expr_i = β1 * DCIS + β2 * healthy + β3 * tumor + ε
+fit <- lmFit(GSE21422,design)
+# 构建对比矩阵
+cont.matrix<-makeContrasts(DCIS-healthy,tumor-healthy,DCIS-tumor, levels=design)
+#        DCIS-healthy   tumor-healthy   DCIS-tumor
+#DCIS         1               0              1
+#healthy     -1              -1              0
+#tumor        0               1             -1
+
+# 重新计算每个基因的差异表达统计量（如 logFC、标准误差、t 值等）
+fit2 <- contrasts.fit(fit, cont.matrix)
+# new_coefficient=transpose(cont.matrix) × original_coefficients
+# 即logFC = (β1-β2, β3-β2, β1-β3)
+
+# 贝叶斯调整，改进方差
+fit2 <- eBayes(fit2)
+# 提取差异表达结果
+# 提取第二个对比结果即tumor-healthy，选定全部基因，使用BH的P值调整方法
+# BH: Benjamini-Hochberg
+GSE21422_DEA<-topTable(fit2, coef=2, number=dim(GSE21422)[1], adjust.method="BH")
+# 写入工作路径
+write.table(GSE21422_DEA,file="DEA_GSE21422_All.txt",sep="\t",quote=FALSE)
+```
+
+筛选上下调基因
+
+```{r }
+# 选取P值显著的基因
+GSE21422_selectP<-GSE21422_DEA[which(as.numeric(GSE21422_DEA$P.Value)<0.05),]
+# 计算符合该条件的基因数量
+dim(GSE21422_selectP)
+# 进一步筛选，选取上调基因并且差异表达系数大于log2(3/2)的基因
+GSE21422_selectUp<-GSE21422_selectP[which(as.numeric(GSE21422_selectP$logFC)>log2(3/2)),]
+dim(GSE21422_selectUp)
+# 同理筛选下调基因
+GSE21422_selectDown<-GSE21422_selectP[which(as.numeric(GSE21422_selectP$logFC)<log2(2/3)),]
+dim(GSE21422_selectDown)
+# 合并上下调基因
+GSE21422_final<-rbind(GSE21422_selectUp,GSE21422_selectDown)
+dim(GSE21422_final)
+# 写入工作路径
+write.table(GSE21422_final,file="DEA_GSE21422_Select.txt",sep="\t",quote=FALSE)
+```
+
+绘制火山图和基因热图，使上下调可视化
+
+```{r}
+library(ggplot2)
+# 单独设置一列作为基因上下调的标记
+GSE21422_DEA$sign<-"no"
+# 设置上下调基因的sign
+GSE21422_DEA[row.names(GSE21422_selectUp),8]<-"up"
+GSE21422_DEA[row.names(GSE21422_selectDown),8]<-"down"
+# 横轴为基因表达强度，纵轴位-log10(P值)，根据sign着色
+ggplot(GSE21422_DEA,aes(x=logFC,y=-log10(as.numeric(P.Value)),color=sign)) +
+  geom_point()+
+  scale_color_manual(values=c("royalblue4","grey70","firebrick3"))  #从蓝到灰到红
+
+library(pheatmap)
+# 选取前20个上调和下调的基因
+name_plot<-row.names(rbind(GSE21422_selectUp[1:20,],GSE21422_selectDown[1:20,]))
+# 提取这40个基因
+GSE21422_plot<-GSE21422[name_plot,]
+# 创建一个新的矩阵，去除第一列基因ID
+GSE21422_plot1 <- GSE21422_plot[,-1]
+# 将新矩阵的行名改为基因ID
+rownames(GSE21422_plot1) <- GSE21422_plot$ID
+# 根据原来的平台信息定义样本分组
+sign <- c(rep('DCIS', 9), rep('healthy', 5), rep('tumor', 5))
+# 创建数据框储存样本分组信息
+annotation_col = data.frame(Type = factor(sign))
+# 将数据框的行名设置为样本编号
+rownames(annotation_col)<-colnames(GSE21422_plot1)
+
+
+pdf("E:/R/Summer_Vacation/爱上生信/GSE21422_RAW/Picture/GSE21422_Heatmap.pdf", 
+    width = 10, height = 8)
+# 绘制基因热图
+# 显示行名（基因名），不显示列名（样本编号）
+# 不对行聚类，对列聚类
+# 添加样本分类注释下，颜色渐变
+pheatmap(GSE21422_plot1,scale = "row",
+         show_rownames=TRUE,show_colnames=FALSE,
+         cluster_rows = FALSE, cluster_cols = TRUE,
+         annotation_col = annotation_col,
+         color = colorRampPalette(c("royalblue4","white","firebrick3"))(500))
+dev.off()
+```
+
+
+
+
+
