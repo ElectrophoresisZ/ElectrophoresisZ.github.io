@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>Cystic_Fibrosis_Aricles</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      color: #f0f0f0;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+    }
+    
+    /* 星空背景效果 */
+    .starry-sky {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #050a18 0%, #0f1c3d 50%, #050a18 100%);
+      z-index: -1;
+      overflow: hidden;
+    }
+    
+    .star {
+      position: absolute;
+      background-color: white;
+      border-radius: 50%;
+      animation: twinkle 2s infinite ease-in-out;
+    }
+    
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+    
+    .meteor {
+      position: absolute;
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.8));
+      transform-origin: top;
+      animation: meteor 1s linear forwards;
+      opacity: 0;
+    }
+    
+    @keyframes meteor {
+      0% {
+        transform: rotate(-30deg) translateY(-100%);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: rotate(-30deg) translateY(100vh);
+        opacity: 0;
+      }
+    }
+    
+    /* 内容容器 */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+    
+    /* 标题样式 */
+    header {
+      text-align: center;
+      margin-bottom: 5rem;
+      position: relative;
+    }
+    
+    .main-title {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 10px rgba(173, 216, 230, 0.5);
+      color: #e6f7ff;
+    }
+    
+    .subtitle {
+      font-size: 1.2rem;
+      color: #b8c5d6;
+      font-style: italic;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    /* 内容区域样式 */
+    .content-section {
+      background-color: rgba(15, 28, 61, 0.6);
+      border-radius: 10px;
+      padding: 2.5rem;
+      margin-bottom: 3rem;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .section-title {
+      font-size: 1.8rem;
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      color: #add8e6;
+      border-bottom: 2px solid rgba(173, 216, 230, 0.3);
+      padding-bottom: 0.5rem;
+    }
+    
+    /* 论文条目样式 */
+    .paper-item {
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+    }
+    
+    .paper-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    
+    .paper-title {
+      font-size: 1.3rem;
+      margin: 0 0 0.5rem 0;
+      color: #ffffff;
+    }
+    
+    .paper-authors {
+      color: #b8c5d6;
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .paper-journal {
+      font-style: italic;
+      color: #87ceeb;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .paper-abstract {
+      font-size: 1rem;
+      color: #e0e0e0;
+      line-height: 1.7;
+    }
+    
+    /* 高亮关键词 */
+    .highlight {
+      color: #ffd700;
+      font-weight: 500;
+    }
+    
+    /* 滚动条样式 */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: rgba(15, 28, 61, 0.5);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: rgba(173, 216, 230, 0.5);
+      border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(173, 216, 230, 0.8);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="starry-sky"></div>
+  
+  <div class="container">
+    <header>
+      <h1 class="main-title">Cystic Fibrosis</h1>
+      <p class="subtitle">Cystic fibrosis is an autosomal recessive disease caused by variants in the gene CFTR.</p>
+    </header>
+    
+    <section class="content-section">
+      <h2 class="section-title">Introduction</h2>
+      <p class="paper-abstract">
+        Focus on <span class="highlight">Cystic Fibirosis Articles</span>
+      </p>
+    </section>
+    
+    <section class="content-section">
+      <h2 class="section-title">Exploration One</h2>
+      
+      <div class="paper-item">
+        <h3 class="paper-title">Cystic Fibrosis</h3>
+        <p class="paper-authors">Hartmut Grasemann, M.D., and Felix Ratjen, M.D.</p>
+        <p class="paper-journal">The New England Journal of Medicine, 2023, 389(18): 1693-1707</p>
+        <p class="paper-abstract">
+          <span class="highlight"></span>
+        </p>
+      </div>
+    </section>
+    
+    
+    
+    
+  </div>
+
+  <script>
+    // 创建星空效果
+    function createStars() {
+      const starrySky = document.querySelector('.starry-sky');
+      const starCount = 300; // 星星数量
+      
+      // 创建固定星星
+      for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        
+        // 随机位置
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        
+        // 随机大小
+        const size = Math.random() * 2.5;
+        
+        // 随机动画延迟和持续时间
+        const delay = Math.random() * 5;
+        const duration = Math.random() * 3 + 1;
+        
+        star.style.left = `${x}%`;
+        star.style.top = `${y}%`;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.animationDelay = `${delay}s`;
+        star.style.animationDuration = `${duration}s`;
+        
+        starrySky.appendChild(star);
+      }
+      
+      // 定时创建流星
+      setInterval(createMeteor, 3000);
+      // 初始创建一个流星
+      createMeteor();
+    }
+    
+    // 创建流星
+    function createMeteor() {
+      const starrySky = document.querySelector('.starry-sky');
+      const meteor = document.createElement('div');
+      meteor.classList.add('meteor');
+      
+      // 随机位置、大小和角度
+      const x = Math.random() * 60 + 20; // 20% 到 80% 之间
+      const size = Math.random() * 3 + 1; // 1px 到 4px 之间
+      const angle = Math.random() * 20 - 40; // -40度到-20度之间
+      
+      meteor.style.left = `${x}%`;
+      meteor.style.top = '0%';
+      meteor.style.width = `${size}px`;
+      meteor.style.height = `${Math.random() * 80 + 40}px`; // 40px到120px之间
+      meteor.style.transform = `rotate(${angle}deg)`;
+      
+      starrySky.appendChild(meteor);
+      
+      // 流星消失后移除元素
+      setTimeout(() => {
+        meteor.remove();
+      }, 1500);
+    }
+    
+    // 页面加载完成后创建星空
+    window.addEventListener('load', createStars);
+  </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jinxi</title>
+    <link rel="stylesheet" href="Jinhxi.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- 视频背景 -->
+    <div class="video-background">
+        <video id="bg-video" autoplay muted loop playsinline>
+            <source src="videos/jinxi_github.mp4" type="video/mp4">
+            <img src="images_for_free/Jinxi.jpg" alt="背景图片">
+        </video>
+    </div>
+    
+    <!-- 半透明遮罩 -->
+    <div id="overlay" class="overlay"></div>
+    
+    <!-- 内容容器 -->
+    <div class="content-container">
+        <!-- 缩小的交互触发区域 -->
+        <div id="interactive-area" class="interactive-area">
+            <h1 class="title">Jinhxi</h1>
+            <p class="quote-box">May I pray for anything specific for you? It would be my honor...I'm sure your wishes will come true.</p>
+            
+        </div>
+    </div>
+
+    <script>
+        // 获取元素
+        const interactiveArea = document.getElementById('interactive-area');
+        const bgVideo = document.getElementById('bg-video');
+        const overlay = document.getElementById('overlay');
+        
+        // 鼠标进入交互区域（范围更小）
+        interactiveArea.addEventListener('mouseenter', () => {
+            interactiveArea.style.opacity = '0';  // 文字消失
+            bgVideo.style.filter = 'brightness(1)';  // 视频亮度提高
+            overlay.style.opacity = '0';  // 遮罩消失
+        });
+        
+        // 鼠标离开交互区域
+        interactiveArea.addEventListener('mouseleave', () => {
+            interactiveArea.style.opacity = '1';  // 文字显示
+            bgVideo.style.filter = 'brightness(0.65)';  // 视频亮度降低
+            overlay.style.opacity = '1';  // 遮罩显示
+        });
+    </script>
+</body>
+</html>
+    

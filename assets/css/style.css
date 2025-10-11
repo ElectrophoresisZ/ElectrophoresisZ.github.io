@@ -1,0 +1,243 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Main styles */
+body {
+    font-family: 'Arial', system-ui, sans-serif;
+    background-color: #f8f9fa;
+    color: #343a40;
+    line-height: 1.6;
+    margin: 20px 40px;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.main-content {
+    flex: 2;
+    min-width: 300px;
+    padding: 10px;
+}
+
+.sidebar-left, .sidebar-right {
+    flex: 1;
+    min-width: 200px;
+    background-color: #f1f3f5;
+    border-radius: 6px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-left h3, .sidebar-right h3 {
+    color: #343a40;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+}
+
+.sidebar-left a, .sidebar-right a {
+    display: block;
+    color: #007bff;
+    text-decoration: none;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.sidebar-left a:hover, .sidebar-right a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+h1 {
+    color: #343a40;
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+    text-align: left;
+}
+
+h2 {
+    color: #343a40;
+    font-size: 1.6rem;
+    margin: 30px 0 15px;
+    font-weight: 500;
+}
+
+p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    color: #495057;
+}
+
+.highlight {
+    background-color: #e9ecef;
+    padding: 20px;
+    border-radius: 6px;
+    margin: 20px 0;
+    border-left: 4px solid #007bff;
+}
+
+.button {
+    display: inline-block;
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 12px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 10px 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.button.secondary {
+    background-color: #6c757d;
+}
+
+.button.secondary:hover {
+    background-color: #5a6268;
+}
+
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.feature {
+    flex: 1;
+    min-width: 200px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+    border-top: 3px solid #007bff;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+}
+
+.feature h3 {
+    color: #343a40;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+}
+
+.code-block {
+    background-color: #212529;
+    color: #f8f9fa;
+    padding: 20px;
+    border-radius: 6px;
+    margin: 20px 0;
+    font-family: 'Courier New', monospace;
+    overflow-x: auto;
+    border-left: 3px solid #007bff;
+}
+
+.color-palette {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.color {
+    width: 60px;
+    height: 60px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 15px;
+    border-top: 1px solid #dee2e6;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    body {
+        margin: 15px 25px;
+        padding: 15px;
+    }
+
+    .container {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    .main-content, .sidebar-left, .sidebar-right {
+        flex: none;
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+    }
+
+    .sidebar {
+      width: 250px;
+      padding: 20px;
+      background-color: #f4f4f4;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+    }
+    .sidebar h2 {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+    .sidebar ul li {
+      margin: 10px 0;
+    }
+    .sidebar ul li a {
+      text-decoration: none;
+      color: #333;
+    }
+    .sidebar ul li a:hover {
+      color: #007bff;
+    }
+    .features {
+        flex-direction: column;
+    }
+
+    .color-palette {
+        justify-content: center;
+    }
+}

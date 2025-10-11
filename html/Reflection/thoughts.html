@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Introduction for the World in Mingchao</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    
+    /* 星空背景效果 */
+    .starry-sky {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #050a18, #0a1930);
+      z-index: -1;
+      overflow: hidden;
+    }
+    
+    /* 星星效果 */
+    .star {
+      position: absolute;
+      background-color: white;
+      border-radius: 50%;
+      animation: twinkle 2s infinite ease-in-out;
+    }
+    
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+    
+    /* 流星效果 */
+    .meteor {
+      position: absolute;
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.8));
+      transform-origin: top;
+      animation: meteor 1s linear forwards;
+      opacity: 0;
+    }
+    
+    @keyframes meteor {
+      0% {
+        transform: rotate(-30deg) translateY(-100%);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: rotate(-30deg) translateY(100vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+  <div class="starry-sky"></div>
+  
+  
+  
+  <script>
+    // 创建星空效果
+    function createStars() {
+      const starrySky = document.querySelector('.starry-sky');
+      const starCount = 200; // 星星数量
+      
+      // 创建固定星星
+      for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        
+        // 随机位置
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        
+        // 随机大小
+        const size = Math.random() * 2;
+        
+        // 随机动画延迟
+        const delay = Math.random() * 5;
+        
+        star.style.left = `${x}%`;
+        star.style.top = `${y}%`;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.animationDelay = `${delay}s`;
+        
+        starrySky.appendChild(star);
+      }
+      
+      // 定时创建流星
+      setInterval(createMeteor, 5000);
+    }
+    
+    // 创建流星
+    function createMeteor() {
+      const starrySky = document.querySelector('.starry-sky');
+      const meteor = document.createElement('div');
+      meteor.classList.add('meteor');
+      
+      // 随机位置和大小
+      const x = Math.random() * 50 + 25; // 25% 到 75% 之间
+      const size = Math.random() * 2 + 1; // 1px 到 3px 之间
+      
+      meteor.style.left = `${x}%`;
+      meteor.style.top = '0%';
+      meteor.style.width = `${size}px`;
+      
+      starrySky.appendChild(meteor);
+      
+      // 流星消失后移除元素
+      setTimeout(() => {
+        meteor.remove();
+      }, 1000);
+    }
+    
+
+    // 页面加载完成后创建星空
+    window.addEventListener('load', createStars);
+  </script>
+</body>
+</html>
+
+    

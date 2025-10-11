@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Github Page</title>
+  <!-- 引入外部资源 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind 配置 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#165DFF',
+            secondary: '#E94560',
+            accent: '#FFD166',
+            dark: '#1A1A2E',
+            light: '#F7F7F9'
+          },
+          fontFamily: {
+            inter: ['Inter', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  
+  <!-- 自定义工具类 -->
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .text-shadow {
+        text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      }
+      .text-gradient {
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .backdrop-blur {
+        backdrop-filter: blur(8px);
+      }
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  </style>
+  
+  <style>
+    /* 全局样式 */
+    body {
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+    
+    /* 花瓣背景容器 */
+    #petal-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none; /* 确保点击能穿透canvas */
+    }
+    
+    /* 平滑滚动 */
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    /* 动画效果 */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    
+    .fade-in.appear {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .hover-lift {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .hover-lift:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+  </style>
+</head>
+
+<body class="bg-dark text-light font-inter">
+  <!-- 花瓣动画背景 -->
+  <canvas id="petal-canvas"></canvas>
+  
+  <!-- 导航栏 -->
+  <nav id="navbar" class="fixed w-full z-50 transition-all duration-300">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center backdrop-blur bg-dark/60 rounded-b-xl">
+      <a href="#hero" class="text-2xl font-bold text-gradient bg-gradient-to-r from-secondary to-accent">
+        <span class="fa fa-leaf mr-2"></span>PetalDev
+      </a>
+      
+      <!-- 桌面导航 -->
+      <div class="hidden md:flex space-x-8">
+        <a href="https://github.com/ElectrophoresisZ" class="hover:text-secondary transition-colors">Github</a>
+        <a href="https://github.com/ElectrophoresisZ/ElectrophoresisZ.github.io/tree/main/R_profile" class="hover:text-secondary transition-colors">Practices_Programs</a>
+      </div>
+      
+      <!-- 移动端菜单按钮 -->
+      <button id="menu-toggle" class="md:hidden text-2xl">
+        <i class="fa fa-bars"></i>
+      </button>
+    </div>
+    
+    <!-- 移动端导航菜单 -->
+    <div id="mobile-menu" class="md:hidden hidden bg-dark/90 backdrop-blur">
+      <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+        <a href="https://github.com/ElectrophoresisZ" class="py-2 hover:text-secondary transition-colors">Github</a>
+        <a href="https://github.com/ElectrophoresisZ/ElectrophoresisZ.github.io/tree/main/R_profile" class="py-2 hover:text-secondary transition-colors">Practices</a>
+      </div>
+    </div>
+  </nav>
+
+  <!--  -->
+  <section id="hero" class="min-h-screen flex items-center justify-center relative pt-16">
+    <div class="container mx-auto px-4 py-16 z-10">
+      <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-[clamp(2.5rem,8vw,5rem)] font-bold leading-tight text-shadow mb-6 fade-in">
+          <span class="text-gradient bg-gradient-to-r from-secondary to-accent">Wandering</span>
+          <span class="block md:inline">in</span>
+          <span class="text-gradient bg-gradient-to-r from-accent to-primary">Bioinformatics</span>
+        </h1>
+        <p class="text-[clamp(1.1rem,3vw,1.5rem)] text-gray-300 mb-10 max-w-2xl mx-auto fade-in" style="transition-delay: 0.2s">
+          Some footprints along the bioinformatics trip
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4 fade-in" style="transition-delay: 0.4s">
+          <a href="#portfolio" class="px-8 py-3 bg-secondary hover:bg-secondary/90 text-white rounded-full font-medium transition-all shadow-lg hover:shadow-secondary/30">
+            Projects
+          </a>
+          <a href="https://github.com/ElectrophoresisZ" class="px-8 py-3 bg-transparent border-2 border-primary hover:bg-primary/10 text-white rounded-full font-medium transition-all">
+            <i class="fa fa-github mr-2"></i>GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 滚动提示 -->
+    <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce fade-in" style="transition-delay: 0.6s">
+      <a href="#portfolio" class="text-gray-400 hover:text-white transition-colors">
+        <i class="fa fa-chevron-down text-2xl"></i>
+      </a>
+    </div>
+  </section>
+
+  <!--  作品集区域 -->
+  <section id="portfolio" class="py-20 relative">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16 fade-in">
+        <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-4 text-shadow">Elaborate Works</h2>
+        <p class="text-gray-400 max-w-2xl mx-auto text-lg">Open to any communication and sharing of ideas!</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- 作品卡片 1 -->
+        <div class="bg-dark/50 backdrop-blur rounded-xl overflow-hidden shadow-lg hover-lift border border-gray-800 fade-in">
+          <div class="h-56 overflow-hidden">
+            <img src="images/LAM.jpg" alt="LAM study" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-3">
+              <h3 class="text-xl font-semibold">Lymphangioleiomyomatosis Study</h3>
+              <span class="bg-secondary/20 text-secondary text-sm px-3 py-1 rounded-full">Projects</span>
+            </div>
+            <p class="text-gray-400 mb-4">Lymphangioleiomyomatosis (LAM) is a rare progressive disease characterized by mutations in the TSC1/TSC2 genes and hyperactivation of the mTORC1 pathway.</p>
+            <a href="https://electrophoresisz.github.io/html/LAM/LAM_Articles.html" class="text-primary hover:text-secondary transition-colors flex items-center">
+              Details <i class="fa fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- 作品卡片 2 -->
+        <div class="bg-dark/50 backdrop-blur rounded-xl overflow-hidden shadow-lg hover-lift border border-gray-800 fade-in" style="transition-delay: 0.1s">
+          <div class="h-56 overflow-hidden">
+            <img src="images/RUN.jpg" alt="Activities" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-3">
+              <h3 class="text-xl font-semibold">Tips</h3>
+              <span class="bg-primary/20 text-primary text-sm px-3 py-1 rounded-full">to find</span>
+            </div>
+            <p class="text-gray-400 mb-4">Life was like a box of chocolates. You never know what you're going to get.</p>
+            <a href="https://electrophoresisz.github.io/html/Reflection/thoughts.html" class="text-primary hover:text-secondary transition-colors flex items-center">
+              Details <i class="fa fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- 作品卡片 3 -->
+        <div class="bg-dark/50 backdrop-blur rounded-xl overflow-hidden shadow-lg hover-lift border border-gray-800 fade-in" style="transition-delay: 0.2s">
+          <div class="h-56 overflow-hidden">
+            <img src="images/Jinxi.png" alt="Wuthering Wave" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-3">
+              <h3 class="text-xl font-semibold">Wonderland</h3>
+              <span class="bg-accent/20 text-accent text-sm px-3 py-1 rounded-full">Relax</span>
+            </div>
+            <p class="text-gray-400 mb-4">Travelling online for freedom.</p>
+            <a href="https://electrophoresisz.github.io/Wuthering_wave/Intro.html" class="text-primary hover:text-secondary transition-colors flex items-center">
+              Details <i class="fa fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="text-center mt-12 fade-in" style="transition-delay: 0.3s">
+        <a href="https://github.com/ElectrophoresisZ/R_Private" class="inline-flex items-center px-6 py-3 border border-gray-700 rounded-full hover:bg-white/5 transition-colors">
+          More Projects <i class="fa fa-long-arrow-right ml-2"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- GitHub 区域 -->
+  <section id="github" class="py-20 bg-dark/30 relative">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16 fade-in">
+        <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-4 text-shadow">GitHub Projects</h2>
+        <p class="text-gray-400 max-w-2xl mx-auto text-lg">Explorations</p>
+      </div>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- GitHub 统计 -->
+        <div class="lg:col-span-1 bg-dark/50 backdrop-blur rounded-xl p-6 shadow-lg border border-gray-800 fade-in">
+          <h3 class="text-xl font-semibold mb-6 flex items-center">
+            <i class="fa fa-chart-pie text-primary mr-2"></i> Distributions
+          </h3>
+          <div class="h-64 mb-6">
+            <canvas id="languages-chart"></canvas>
+          </div>
+          <div class="space-y-4">
+            <div>
+              <div class="flex justify-between mb-1">
+                <span class="text-gray-400">All Projects</span>
+                <span class="font-medium">0</span>
+              </div>
+              <div class="w-full bg-gray-700 rounded-full h-2">
+                <div class="bg-primary h-2 rounded-full" style="width: 85%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1">
+                <span class="text-gray-400">Findings</span>
+                <span class="font-medium">0</span>
+              </div>
+              <div class="w-full bg-gray-700 rounded-full h-2">
+                <div class="bg-secondary h-2 rounded-full" style="width: 92%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1">
+                <span class="text-gray-400">Followers</span>
+                <span class="font-medium">0</span>
+              </div>
+              <div class="w-full bg-gray-700 rounded-full h-2">
+                <div class="bg-accent h-2 rounded-full" style="width: 65%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- GitHub 项目列表 -->
+        <div class="lg:col-span-2 bg-dark/50 backdrop-blur rounded-xl p-6 shadow-lg border border-gray-800 fade-in" style="transition-delay: 0.2s">
+          <h3 class="text-xl font-semibold mb-6 flex items-center">
+            <i class="fa fa-github text-primary mr-2"></i> Popular Projects
+          </h3>
+          
+          <div class="space-y-4">
+            <!-- 项目 1 -->
+            <div class="p-4 hover:bg-white/5 rounded-lg transition-colors border border-gray-800">
+              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2">
+                <h4 class="font-semibold text-lg">to be continued</h4>
+                <div class="flex items-center mt-2 sm:mt-0">
+                  <span class="text-gray-400 text-sm mr-4"><i class="fa fa-star mr-1"></i> 0</span>
+                  <span class="text-gray-400 text-sm"><i class="fa fa-code-fork mr-1"></i> 0</span>
+                </div>
+              </div>
+              <p class="text-gray-400 text-sm mb-3">to be continued</p>
+              <div class="flex items-center text-xs text-gray-500">
+                <span class="bg-blue-500/20 text-blue-400 px-2 py-1 rounded mr-2">?</span>
+                <span class="bg-purple-500/20 text-purple-400 px-2 py-1 rounded mr-2">?</span>
+                <span class="ml-auto">to be continued</span>
+              </div>
+            </div>
+            
+            <!-- 项目 2 -->
+            <div class="p-4 hover:bg-white/5 rounded-lg transition-colors border border-gray-800">
+              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2">
+                <h4 class="font-semibold text-lg">to be continued</h4>
+                <div class="flex items-center mt-2 sm:mt-0">
+                  <span class="text-gray-400 text-sm mr-4"><i class="fa fa-star mr-1"></i> 0</span>
+                  <span class="text-gray-400 text-sm"><i class="fa fa-code-fork mr-1"></i> 0</span>
+                </div>
+              </div>
+              <p class="text-gray-400 text-sm mb-3">to be continued</p>
+              <div class="flex items-center text-xs text-gray-500">
+                <span class="bg-green-500/20 text-green-400 px-2 py-1 rounded mr-2">?</span>
+                <span class="bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded mr-2">?</span>
+                <span class="ml-auto">to be continued</span>
+              </div>
+            </div>
+            
+            <!-- 项目 3 -->
+            <div class="p-4 hover:bg-white/5 rounded-lg transition-colors border border-gray-800">
+              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2">
+                <h4 class="font-semibold text-lg">to be continued</h4>
+                <div class="flex items-center mt-2 sm:mt-0">
+                  <span class="text-gray-400 text-sm mr-4"><i class="fa fa-star mr-1"></i> 0</span>
+                  <span class="text-gray-400 text-sm"><i class="fa fa-code-fork mr-1"></i> 0</span>
+                </div>
+              </div>
+              <p class="text-gray-400 text-sm mb-3">to be continued</p>
+              <div class="flex items-center text-xs text-gray-500">
+                <span class="bg-orange-500/20 text-orange-400 px-2 py-1 rounded mr-2">?</span>
+                <span class="bg-red-500/20 text-red-400 px-2 py-1 rounded mr-2">?</span>
+                <span class="ml-auto">to be continued</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-6 text-center">
+            <a href="#" class="inline-flex items-center px-5 py-2 bg-primary/20 hover:bg-primary/30 text-primary rounded-lg transition-colors">
+              Other Projects <i class="fa fa-external-link ml-2"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 联系区域 -->
+  <section id="contact" class="py-20 relative">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-16 fade-in">
+          <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-4 text-shadow">Contact me</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto text-lg">Please feel free to contact with any questions or cooperation intentions</p>
+        </div>
+        
+        <div class="bg-dark/50 backdrop-blur rounded-xl p-8 shadow-lg border border-gray-800 fade-in" style="transition-delay: 0.1s">
+          <form class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label for="name" class="block text-sm font-medium text-gray-400 mb-2">Name</label>
+                <input type="text" id="name" class="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary transition-colors" placeholder="您的姓名">
+              </div>
+              <div>
+                <label for="email" class="block text-sm font-medium text-gray-400 mb-2">Email</label>
+                <input type="email" id="email" class="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary transition-colors" placeholder="您的邮箱">
+              </div>
+            </div>
+            
+            <div>
+              <label for="subject" class="block text-sm font-medium text-gray-400 mb-2">Theme</label>
+              <input type="text" id="subject" class="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary transition-colors" placeholder="消息主题">
+            </div>
+            
+            <div>
+              <label for="message" class="block text-sm font-medium text-gray-400 mb-2">Message</label>
+              <textarea id="message" rows="5" class="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary transition-colors resize-none" placeholder="请输入您的消息..."></textarea>
+            </div>
+            
+            <div class="text-center">
+              <button type="submit" class="px-8 py-3 bg-secondary hover:bg-secondary/90 text-white rounded-full font-medium transition-all shadow-lg hover:shadow-secondary/30">
+                Send
+              </button>
+            </div>
+          </form>
+          
+          <div class="mt-12 pt-8 border-t border-gray-800">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+              <div class="p-4">
+                <div class="text-primary text-3xl mb-3">
+                  <i class="fa fa-envelope"></i>
+                </div>
+                <h3 class="font-medium mb-1">Email</h3>
+                <p class="text-gray-400 text-sm">feiyang20060823@163.com</p>
+              </div>
+              <div class="p-4">
+                <div class="text-primary text-3xl mb-3">
+                  <i class="fa fa-map-marker"></i>
+                </div>
+                <h3 class="font-medium mb-1">Address</h3>
+                <p class="text-gray-400 text-sm">China</p>
+              </div>
+              <div class="p-4">
+                <div class="text-primary text-3xl mb-3">
+                  <i class="fa fa-weixin"></i>
+                </div>
+                <h3 class="font-medium mb-1">Wechat</h3>
+                <p class="text-gray-400 text-sm">to be continued</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="py-10 bg-dark/70 backdrop-blur border-t border-gray-800">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-6 md:mb-0">
+          <a href="#hero" class="text-xl font-bold text-gradient bg-gradient-to-r from-secondary to-accent">
+            <span class="fa fa-leaf mr-2"></span>PetalDev
+          </a>
+          <p class="text-gray-500 mt-2">Inspirations flash from communications.</p>
+        </div>
+        
+        <div class="flex space-x-6">
+          <a href="#" class="text-gray-400 hover:text-primary transition-colors text-xl">
+            <i class="fa fa-github"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-primary transition-colors text-xl">
+            <i class="fa fa-twitter"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-primary transition-colors text-xl">
+            <i class="fa fa-instagram"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-primary transition-colors text-xl">
+            <i class="fa fa-linkedin"></i>
+          </a>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+        <p>&copy; 2025.9.24</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // 花瓣粒子类
+    class Petal {
+      constructor(canvas) {
+        this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
+        this.reset();
+      }
+      
+      // 初始化/重置花瓣属性
+      reset() {
+        // 位置
+        this.x = Math.random() * this.canvas.width;
+        this.y = Math.random() * -this.canvas.height; // 从画布上方开始
+        
+        // 大小
+        this.size = Math.random() * 8 + 4; // 4-12px
+        
+        // 速度
+        this.speedX = Math.random() * 0.5 - 0.25; // 左右飘动
+        this.speedY = Math.random() * 1 + 0.5; // 下落速度
+        
+        // 旋转
+        this.rotation = Math.random() * Math.PI * 2;
+        this.rotationSpeed = Math.random() * 0.02 - 0.01;
+        
+        // 透明度
+        this.alpha = Math.random() * 0.5 + 0.3; // 0.3-0.8
+        
+        // 颜色 - 粉色系花瓣
+        const colors = [
+          'rgba(255, 183, 197, alpha)',   // 浅粉色
+          'rgba(255, 105, 180, alpha)',   // 热粉色
+          'rgba(219, 112, 147, alpha)',   // 淡紫色
+          'rgba(255, 160, 122, alpha)',   // 浅珊瑚色
+          'rgba(255, 218, 185, alpha)'    // 桃色
+        ];
+        this.color = colors[Math.floor(Math.random() * colors.length)].replace('alpha', this.alpha);
+      }
+      
+      // 更新花瓣位置和状态
+      update(wind) {
+        // 应用风力影响
+        this.x += this.speedX + wind;
+        this.y += this.speedY;
+        this.rotation += this.rotationSpeed;
+        
+        // 当花瓣飞出画布时重置
+        if (this.y > this.canvas.height || this.x < -this.size || this.x > this.canvas.width + this.size) {
+          this.reset();
+        }
+      }
+      
+      // 绘制花瓣
+      draw() {
+        this.ctx.save();
+        this.ctx.globalAlpha = this.alpha;
+        this.ctx.fillStyle = this.color;
+        this.ctx.translate(this.x, this.y);
+        this.ctx.rotate(this.rotation);
+        
+        // 绘制花瓣形状 (简化的花瓣路径)
+        this.ctx.beginPath();
+        this.ctx.ellipse(0, 0, this.size, this.size * 1.5, 0, 0, Math.PI * 2);
+        this.ctx.fill();
+        
+        this.ctx.restore();
+      }
+    }
+    
+    // 花瓣系统
+    class PetalSystem {
+      constructor() {
+        this.canvas = document.getElementById('petal-canvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.petals = [];
+        this.wind = 0;
+        this.windTimer = 0;
+        
+        this.resizeCanvas();
+        this.initPetals();
+        this.animate();
+        
+        // 监听窗口大小变化
+        window.addEventListener('resize', () => this.resizeCanvas());
+      }
+      
+      // 调整画布大小以匹配窗口
+      resizeCanvas() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+      }
+      
+      // 初始化花瓣
+      initPetals() {
+        const petalCount = Math.floor((this.canvas.width * this.canvas.height) / 50000); // 根据屏幕大小确定花瓣数量
+        for (let i = 0; i < petalCount; i++) {
+          this.petals.push(new Petal(this.canvas));
+        }
+      }
+      
+      // 随机风力变化
+      updateWind() {
+        this.windTimer++;
+        if (this.windTimer > 60) { // 每60帧更新一次风力
+          this.wind = (Math.random() - 0.5) * 0.8; // -0.4 到 0.4 之间的风力
+          this.windTimer = 0;
+        }
+      }
+      
+      // 动画循环
+      animate() {
+        // 清空画布
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        
+        // 更新风力
+        this.updateWind();
+        
+        // 更新和绘制所有花瓣
+        for (const petal of this.petals) {
+          petal.update(this.wind);
+          petal.draw();
+        }
+        
+        // 请求下一帧动画
+        requestAnimationFrame(() => this.animate());
+      }
+    }
+    
+    // 页面滚动动画
+    function setupScrollAnimations() {
+      const fadeElements = document.querySelectorAll('.fade-in');
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('appear');
+          }
+        });
+      }, { threshold: 0.1 });
+      
+      fadeElements.forEach(element => {
+        observer.observe(element);
+      });
+    }
+    
+    // 导航栏滚动效果
+    function setupNavbarScroll() {
+      const navbar = document.getElementById('navbar');
+      
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add('bg-dark/80');
+          navbar.classList.remove('py-4');
+          navbar.classList.add('py-2');
+        } else {
+          navbar.classList.remove('bg-dark/80');
+          navbar.classList.add('py-4');
+          navbar.classList.remove('py-2');
+        }
+      });
+    }
+    
+    // 移动端菜单切换
+    function setupMobileMenu() {
+      const menuToggle = document.getElementById('menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+      
+      menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        const icon = menuToggle.querySelector('i');
+        if (mobileMenu.classList.contains('hidden')) {
+          icon.classList.remove('fa-times');
+          icon.classList.add('fa-bars');
+        } else {
+          icon.classList.remove('fa-bars');
+          icon.classList.add('fa-times');
+        }
+      });
+    }
+    
+    // 初始化语言图表
+    function initLanguagesChart() {
+      const ctx = document.getElementById('languages-chart').getContext('2d');
+      
+      new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['JavaScript', 'TypeScript', 'HTML/CSS', 'Python', '其他'],
+          datasets: [{
+            data: [40, 20, 15, 15, 10],
+            backgroundColor: [
+              '#F7DF1E', // JavaScript 黄色
+              '#3178C6', // TypeScript 蓝色
+              '#E34F26', // HTML 红色
+              '#3776AB', // Python 蓝色
+              '#808080'  // 其他 灰色
+            ],
+            borderWidth: 0,
+            hoverOffset: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                color: '#F7F7F9',
+                padding: 15,
+                font: {
+                  size: 11
+                }
+              }
+            }
+          },
+          cutout: '70%'
+        }
+      });
+    }
+    
+    // 页面加载完成后初始化
+    window.addEventListener('DOMContentLoaded', () => {
+      // 初始化花瓣系统
+      new PetalSystem();
+      
+      // 初始化其他功能
+      setupScrollAnimations();
+      setupNavbarScroll();
+      setupMobileMenu();
+      initLanguagesChart();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Introduction for the World in Mingchao</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="Intro.css">
+</head>
+<body>
+  <!-- 淡色背景容器 -->
+  <div class="light-background"></div>
+
+  <div class="wuthering-waves">
+    <h1 class="ww-title">Walking in the wonderland; Experience the breath of freedom</h1>
+    
+    <h2 class="ww-title" style="text-align: center;">Special Video Takes You Through the World of Mingchao</h2>
+    <!-- 视频区域：优化播放逻辑 -->
+    <div class="video-container">
+      <!-- 视频封面+播放按钮 -->
+      <div class="video-cover">
+        <img src="images_for_free/MC_wallpaper.png" alt="视频封面" class="cover-img">
+        <div class="play-button"></div>
+      </div>
+      
+      <!-- 视频标签：双格式兼容 -->
+      <video 
+        class="main-video"
+        width="100%"  
+        controls
+        preload="metadata"  
+        poster="images_for_free/MC_wallpaper.png"
+        type="video/mp4"
+      >
+        <!-- 优先MP4格式，备用WebM格式 -->
+        <source src="video/MC1_convert.mp4" type="video/mp4">
+        
+      </video>
+    </div>
+
+    <h2 class="ww-title" style="text-align: center;">You must be impressed by the conditions and customs there!</h2>
+    <hr>
+
+    <!-- 图片展示区：自适应排列 -->
+    <div class="image-group">
+      <img src="images_for_free/Captain.jpg" alt="Captain" loading="lazy">
+      <img src="images_for_free/Jinxi.jpg" alt="Jinxi" loading="lazy">
+      <img src="images_for_free/Fuluoluo.jpg" alt="Fuluoluo" loading="lazy">
+      <img src="images_for_free/Rover.jpg" alt="Rover" loading="lazy">
+    </div>
+    <hr>
+
+    <!-- 介绍区域 -->
+    <h2 class="ww-title">Introduction</h2>
+    <p>Wuthering Waves brings you to travel across the Solaris world. You will encounter friends with different characters. As a rover whose memory has been rushed thousands of times, you seem to be predestined for saving the Solaris, meanwhile experiencing the process that civilisation here germinated, grew and evolved...</p>
+    <p>在索拉里斯的荒野徜徉，寻一处静谧以抚慰那残破不堪的灵魂......</p>
+
+    <!-- 角色导航 -->
+    <h2 class="ww-title">You and Your Companion</h2>
+    <div class="character-links">
+      <a href="#Rover" class="ww-link">Rover</a>
+      <a href="#Shorekeeper" class="ww-link">Shorekeeper</a>
+      <a href="#Jinhxin" class="ww-link">Jinhxin</a>
+      <a href="#Verina" class="ww-link">Verina</a>
+    </div>
+
+    <!-- 角色卡片 -->
+    <!-- Rover -->
+    <div id="Rover" class="character-card">
+      <div class="character-header">
+        <img src="images_for_free/Rover.jpg" alt="Rover" class="character-avatar" loading="lazy">
+        <div class="character-info">
+          <h3>Rover</h3>
+          <div class="character-title">Spectro & Havoc & Aero</div>
+        </div>
+      </div>
+      <div class="character-description">
+        <p>I will be there for everyone...As we head toward our shared future, leaving the past behind.</p>
+      </div>
+      <div class="character-abilities">
+        <span class="ability-tag">Tuneslayer</span>
+        <span class="ability-tag">Wingblade</span>
+        <span class="ability-tag">Umbra Eclipse</span>
+        <span class="ability-tag">Deadening Abyss</span>
+      </div>
+    </div>
+
+    <!-- Shorekeeper 空卡片 -->
+    <div id="Shorekeeper" class="character-card empty-card">
+      <img src="images_for_free/empty-avatar.png" alt="Shorekeeper" class="character-avatar" loading="lazy">
+      <h3 class="empty-title">Shorekeeper</h3>
+      <p class="empty-desc">Character information will be updated soon.</p>
+    </div>
+
+    <!-- Jinhxin -->
+    <div id="Jinhxin" class="character-card">
+      <div class="character-header">
+        <img src="images_for_free/Jinxi.jpg" alt="Jinhxin" class="character-avatar" loading="lazy">
+        <div class="character-info">
+          <h3>Jinhxin</h3>
+          <div class="character-title">Spectro</div>
+        </div>
+      </div>
+      <div class="character-description">
+        <p><a href="#" class="ww-link">May I pray for anything specific for you? It would be my honor...I'm sure your wishes will come true.</a></p>
+      </div>
+      <div class="character-abilities">
+        <span class="ability-tag">Slash of Breaking Dawn</span>
+        <span class="ability-tag">Trailing Lights of Eons</span>
+        <span class="ability-tag">Luminal Synthesis</span>
+        <span class="ability-tag">Purge of Light</span>
+      </div>
+    </div>
+
+    <!-- Verina 空卡片 -->
+    <div id="Verina" class="character-card empty-card">
+      <img src="images_for_free/empty-avatar.png" alt="Verina" class="character-avatar" loading="lazy">
+      <h3 class="empty-title">Verina</h3>
+      <p class="empty-desc">Character information will be updated soon.</p>
+    </div>
+  </div>
+
+  <!-- 视频播放控制脚本 -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const videoCover = document.querySelector('.video-cover');
+      const playButton = document.querySelector('.play-button');
+      const mainVideo = document.querySelector('.main-video');
+
+      // 点击封面或播放按钮播放视频
+      videoCover.addEventListener('click', function(e) {
+        // 防止事件冒泡问题
+        if (e.target === videoCover || e.target === playButton) {
+          videoCover.style.display = 'none';
+          playVideo();
+        }
+      });
+
+      // 视频暂停时的处理
+      mainVideo.addEventListener('pause', function() {
+        if (!mainVideo.ended) {
+          videoCover.style.display = 'block';
+        }
+      });
+
+      // 视频播放时的处理
+      mainVideo.addEventListener('play', function() {
+        videoCover.style.display = 'none';
+      });
+
+      // 视频结束时的处理
+      mainVideo.addEventListener('ended', function() {
+        videoCover.style.display = 'block';
+      });
+
+      // 播放视频函数
+      function playVideo() {
+        mainVideo.play().catch(function(error) {
+          console.log('播放失败：', error);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

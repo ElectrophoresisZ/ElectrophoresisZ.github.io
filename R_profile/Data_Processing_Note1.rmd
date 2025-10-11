@@ -1,0 +1,193 @@
+---
+title: "Data Processing"
+output: html_document
+date: "2025-06-21"
+---
+
+以GSE21422为例，从 https://www.ncbi.nlm.nih.gov/geo/ 上下载
+
+解压并重命名文件
+
+```{r}
+setwd("E:/R/Summer_Vacation/爱上生信/GSE21422_RAW") #自己填
+
+# 在当前路径寻找压缩文件，后缀为CEL
+files <- dir(pattern="CEL$")
+# 清除该文件，因为从网上下载下来的是多重压缩文件，CEL文件可能是以前处理时残留的数据
+sapply(files, unlink)
+
+# 寻找压缩形式为gz的文件
+files <- dir(pattern="gz$")
+# 解压gz文件成CEL文件
+sapply(files, R.utils::gunzip)  
+# 获取全部CEL文件，赋给Cellfiles
+Cellfiles <- dir(pattern="CEL$")
+
+# 重命名文件
+# 按"_"分割，获取分割列表的第一个向量元素，取该向量的第一个元素与".CEL"合并
+for(i in 1:length(Cellfiles)){
+  file.rename(Cellfiles[i],paste(strsplit(Cellfiles[i],"_")[[1]][1],".CEL",sep=""))  
+} # file.rename()是一个整体
+# 同理
+Cellfiles <- dir(pattern="CEL$")
+```
+
+读取CEL数据并进行归一化
+
+```{r }
+library(affy)
+# 读取CEL文件
+raw_data <- ReadAffy(filenames=Cellfiles)
+# 保存原始数据
+save(raw_data,file = "raw_data_GSE21422.Rdata")
+# 下次直接运行就可获得该初步处理后的数据
+#load("raw_data_GSE21422.Rdata")
+
+# 归一化
+# 不同测序方式导致基因数据的差异，还有部分噪声污染、技术误差
+# 统一标准，去除误差
+rma_data_GSE21422 <- rma(raw_data)
+# 同理
+save(rma_data_GSE21422,file = "raw_data_GSE21422_rma.Rdata")
+#load("raw_data_GSE21422_rma.Rdata")
+```
+
+提取表达矩阵并观察基因表达情况
+基因表达情况包括本身的高低表达和不同个体的一致性
+
+```{r}
+library(Biobase)
+# 提取表达矩阵
+# 将归一化后的结构化数据转化成人类可视化的表达矩阵，也就是表格
+exp_data_GSE21422 = exprs(rma_data_GSE21422)
+
+# 观察基因表达分布
+# 横轴为基因表达强度的log2转换值，纵轴为在某一表达值区间内的探针数量频率
+# 理论上应满足正态分布（归一化假定大多数基因的表达量在集中值附近；中心极限定理）
+hist(exp_data_GSE21422,main = "rma")
+par(mfrow = c(1,1),cex.lab=0.7,cex.axis=0.7) #直方图参数自定义
+
+library("RColorBrewer") 
+# 从"Set1"调色板中提取了8种颜色存储在cols变量中
+cols <- brewer.pal(8, "Set1")
+# 创建pdf文件输出设备
+pdf("E:/R/Summer_Vacation/爱上生信/GSE21422_RAW/Picture/Overall_boxplot_GSE21422.pdf", width=60, height=6) #自己填
+# 绘制不同样本的箱线图
+# 线宽lwd=1，颜色8种，x轴标签垂直显示las=2，strsplit通过"\\."分割文件名
+# unlist展开列表，*2-1表示只取奇数项，即只取样本名
+# names表示箱线图的横轴
+boxplot(exp_data_GSE21422,lwd = 1,col = cols,main = "rma",las=2,names=unlist(lapply(Cellfiles,strsplit,"\\."))[c(1:length(Cellfiles)*2-1)]) 
+# 关闭图形设备
+dev.off()
+```
+
+优化表达矩阵，提取目标信息，按照该信息分类筛选数据，为差异分析做准备
+注意：之前一直在处理的对象是不同样本的各个基因，现在与平台链接为了可视化详细的样本信息。这有利于后续的健康与疾病状况分类，从而观测基因的上调与下调。
+
+```{r}
+#去除表达矩阵种样本的后缀“.CEL"
+colnames(exp_data_GSE21422)<-gsub(".CEL","",colnames(exp_data_GSE21422))
+
+library(GEOquery)
+# 下载GSE21422数据集并存储
+# getGPL=F表示不自动下载并关联平台信息（可加快下载速度，后续需要时可单独下载）
+# 提取平台信息中的ExpressionSet对象
+gset_GSE21422 <- getGEO("GSE21422", getGPL = F )
+# 第一个矩阵包含各样本的具体病情，不同于之前的基因信息
+Gset_GSE21422 <- gset_GSE21422[[1]]
+
+library(Biobase)
+# 提取样本信息，以表达矩阵的形式可视化
+pdata_GSE21422<-pData(Gset_GSE21422)
+# 保存
+save(pdata_GSE21422,file = "pdata_GSE21422.Rdata")
+# load("pdata_GSE21422.Rdata")
+
+#获取判断样本是患病还是健康的列数据类别
+table(pdata_GSE21422$source_name_ch1)
+#摘取目标列对应的行索引并合并为一个向量
+sortname<-c(grep("DCIS",pdata_GSE21422[,8]),
+            grep("healthy",pdata_GSE21422[,8]),
+            grep("tumor",pdata_GSE21422[,8]))
+# 获取行索引对应的样本名
+pdata_GSE21422_sort<-row.names(pdata_GSE21422[sortname,])
+# 从原始表达矩阵中仅保留筛选的样本（此处是全筛选）
+exp_data_GSE21422<-exp_data_GSE21422[,pdata_GSE21422_sort]
+# 保存
+save(exp_data_GSE21422,file="exp_data_GSE25066_rma.Rdata")
+#load("exp_data_GSE25066_rma.Rdata")
+```
+
+寻找相关基因，优化以探针为索引的表达矩阵
+
+```{r}
+library(GEOquery)
+# 从GEO数据库下载编号为GPL570的芯片平台信息
+# 包含探针ID、对应基因符号(Gene Symbol),基因名(Gene Name),EntrezID等注释信息。
+platf_GPL570 <- getGEO("GPL570")
+save(platf_GPL570,file="platf_GPL570.Rdata") 
+#load("platf_GPL570.Rdata")
+# 提取GPL注释的核心数据表，获取数据表内部结构并转化成数据框格式
+platf_GPL570_table <-data.frame(attr(dataTable(platf_GPL570), "table"))
+save(platf_GPL570_table,file = "platf_GPL570_table.Rdata")
+#load("platf_GPL570_table.Rdata")
+# 打印数据表列内容，如探针ID和基因名
+names(platf_GPL570_table)
+
+# 将数据框的行名改为探针名（原来是索引）
+rownames(platf_GPL570_table) = platf_GPL570_table$ID
+# 根据探针ID提取基因符号
+GSE21422_name<-platf_GPL570_table[row.names(exp_data_GSE21422),"Gene.Symbol"]
+# 合并基因符号和原先的表达矩阵
+GSE21422_exp<-cbind(GSE21422_name,exp_data_GSE21422)
+# 删除空缺基因符号和多基因符号
+# which 函数返回满足条件的元素位置（索引）
+GSE21422_exp1<-GSE21422_exp[-c(which(GSE21422_name==""),grep("///",GSE21422_name)),]
+```
+
+计算重复基因的表达均值并与非重复基因的表达值合并
+
+```{r}
+# 检测重复基因并统计
+# duplicated() 标记重复出现的基因名（从第二次出现开始返回TRUE）
+# unique() 提取所有重复基因名的唯一值
+du<-unique(GSE21422_exp1[duplicated(GSE21422_exp1[,1]),1]);length(du)
+# 删除缺失的基因名
+du<-na.omit(du);length(du)
+
+# 记录所有重复基因的行索引
+index<-c() 
+# 存储合并后的表达矩阵
+new<-c()
+for(x in du){
+  # 获取重复基因的行位置
+  ind<-which(GSE21422_exp1[,1]==x)
+  # 提取所有样本表达值并转为数值矩阵
+  matr<-apply(GSE21422_exp1[ind,2:dim(GSE21422_exp1)[2]],2,as.numeric) 
+  # 计算每个样本的列均值（仅包含重复基因的行）
+  gene<-colMeans(matr)
+  # 均值结果依次存储成矩阵形式
+  new<-rbind(new,gene)
+  # 记录处理过的行号
+  index<-c(index,ind)
+}
+
+# 更改矩阵行名
+rownames(new) <- du
+# 去除重复基因和空基因
+residata<-GSE21422_exp1[-index,]
+# 将剩余数据的行名设为基因名
+rownames(residata)<-residata[,1]
+# 合并未重复数据与均值数据
+GSE21422_exp2<-rbind(residata[,-1],new)
+# 加一行ID，使行名在txt文档中显现
+ID<-row.names(GSE21422_exp2)
+GSE21422_final<-cbind(ID,GSE21422_exp2)
+# 写文档
+# 不保存行名，tab作为分隔符，不将字符型数据用引号包围
+write.table(GSE21422_final,
+            file="E:/R/Summer_Vacation/爱上生信/GSE21422_RAW/GSE21422_final_rma.txt",
+            row.names = FALSE,sep="\t",quote=FALSE)
+```
+
+

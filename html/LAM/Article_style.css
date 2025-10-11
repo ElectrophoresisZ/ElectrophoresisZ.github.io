@@ -1,0 +1,213 @@
+/* 基础样式重置与全局设置 */
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  color: #f0f0f0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.6;
+}
+
+/* 星空背景效果 */
+.starry-sky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #050a18 0%, #0f1c3d 50%, #050a18 100%);
+  z-index: -1;
+  overflow: hidden;
+}
+
+.star {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  animation: twinkle 2s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.meteor {
+  position: absolute;
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.8));
+  transform-origin: top;
+  animation: meteor 1s linear forwards;
+  opacity: 0;
+}
+
+@keyframes meteor {
+  0% {
+    transform: rotate(-30deg) translateY(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(-30deg) translateY(100vh);
+    opacity: 0;
+  }
+}
+
+/* 内容容器 */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+/* 标题样式 */
+header {
+  text-align: center;
+  margin-bottom: 5rem;
+  position: relative;
+}
+
+.main-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 10px rgba(173, 216, 230, 0.5);
+  color: #e6f7ff;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #b8c5d6;
+  font-style: italic;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* 内容区域样式 */
+.content-section {
+  background-color: rgba(15, 28, 61, 0.6);
+  border-radius: 10px;
+  padding: 2.5rem;
+  margin-bottom: 3rem;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.section-title {
+  font-size: 1.8rem;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: #add8e6;
+  border-bottom: 2px solid rgba(173, 216, 230, 0.3);
+  padding-bottom: 0.5rem;
+}
+
+/* 论文条目样式 */
+.paper-item {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.paper-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.paper-title {
+  font-size: 1.3rem;
+  margin: 0 0 0.5rem 0;
+  color: #ffffff;
+}
+
+.paper-authors {
+  color: #b8c5d6;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+.paper-journal {
+  font-style: italic;
+  color: #87ceeb;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.paper-abstract {
+  font-size: 1.2rem;
+  color: #e0e0e0;
+  line-height: 1.7;
+}
+
+/* 高亮关键词 */
+.highlight {
+  color: #ffd700;
+  font-weight: 500;
+}
+
+/* 目录链接样式 */
+.linking {
+  color: #f0be19ff;
+  text-decoration: none;
+  display: block;
+  padding: 8px 15px;
+  margin: 5px 0;
+  border-left: 3px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.linking:hover {
+  color: #dbe618ff;
+  border-left-color: #4299e1;
+  background: rgba(66, 153, 225, 0.1);
+  transform: translateX(5px);
+}
+
+/* 返回目录按钮样式 */
+.back-to-toc {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  padding: 10px 18px;
+  background-color: rgba(15, 28, 61, 0.8);
+  color: #f0be19ff;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  z-index: 100; /* 确保在其他内容上方 */
+}
+
+.back-to-toc:hover {
+  background-color: rgba(66, 153, 225, 0.2);
+  transform: translateY(-5px);
+  color: #dbe618ff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 28, 61, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(173, 216, 230, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(173, 216, 230, 0.8);
+}

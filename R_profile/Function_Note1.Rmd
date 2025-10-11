@@ -1,0 +1,171 @@
+---
+title: "Function"
+output: html_document
+date: "2025-06-25"
+---
+
+对差异表达分析的结果进行预处理
+
+```{r}
+# 清空环境变量
+rm(list=ls())
+
+# 读取选定的基因
+GSE21422_Gene<-read.table("DEA_GSE21422_Select.txt",header=TRUE,row.names = 1,sep="\t")
+# 将基因symbol设定为行名
+GSE21422_Gene1 <- GSE21422_Gene[,-1]
+row.names(GSE21422_Gene1) <- GSE21422_Gene[,1]
+# 分类上下调基因
+UP_GSE21422<-as.character(row.names(GSE21422_Gene1[which(GSE21422_Gene1[,1] > 0),]))
+DOWN_GSE21422<-as.character(row.names(GSE21422_Gene1[which(GSE21422_Gene1[,1] < 0),]))
+```
+
+上调基因：KEGG富集分析
+核心问题：差异基因是否在某些通路中显著富集
+
+```{r}
+library(clusterProfiler)
+suppressMessages(library(org.Hs.eg.db))
+# 将基因 Symbol 转换为 Entrez ID
+up_GSE21422_mRNA<- bitr(UP_GSE21422,fromType="SYMBOL", toType="ENTREZID", OrgDb="org.Hs.eg.db")
+# up_GSE21422_mRNA 是一个数据框，包含两列：SYMBOL 和 ENTREZID
+# 提取ENTREZ ID
+up_GSE21422_genelist<-up_GSE21422_mRNA[,2]
+# 将 ENTREZ ID 设为数据框的行名
+row.names(up_GSE21422_mRNA)<-up_GSE21422_genelist
+
+# KEGG富集分析
+# hsa: 人类KEGG数据库；仅保留P值<0.05；不过滤q值
+# 使用在线KEGG数据库（而非本地）
+KEGG_GSE21422_up<- enrichKEGG(up_GSE21422_genelist, organism = "hsa", keyType = "kegg", pvalueCutoff = 0.05,qvalueCutoff =1,pAdjustMethod = "none",use_internal_data = FALSE)
+# 查看富集到的通路数量
+dim(KEGG_GSE21422_up)
+
+# 绘制条形图，展示前10个最显著的通路（按p值排序）
+# 横轴：基因比例（富集到该通路的基因数/输入基因总数）
+# 纵轴：通路名称，颜色代表p值（越红越显著）
+barplot(KEGG_GSE21422_up,showCategory=10)
+# 将富集分析的结果转化为数据框的形式
+KEGG_GSE21422_up_df<-data.frame(KEGG_GSE21422_up)
+
+# 将富集结果中的 Entrez ID 转换回更易读的基因Symbol
+genesymbol<-c()
+for(i in 1:nrow(KEGG_GSE21422_up_df)){
+  # 提取通路中的Entrez ID
+  geneID<-KEGG_GSE21422_up_df[i,"geneID"]
+  # 拆分ID为向量
+  geneID<-unlist(strsplit(geneID,"/"))
+  # 提取基因symbol
+  genename<-up_GSE21422_mRNA[geneID,1]
+  # 合并Symbol为一个字符串
+  genename<-paste(genename, collapse =",")
+  genesymbol<-c(genesymbol,genename)
+}
+# 合并到富集结果
+KEGG_GSE21422_up_df_final<-cbind(KEGG_GSE21422_up_df,genesymbol)
+
+# 写入工作路径
+write.table(KEGG_GSE21422_up_df_final,"KEGGenrich_GSE21422Up.txt",quote=FALSE,row.names=FALSE,sep="\t")
+```
+
+下调基因：KEGG富集分析同理
+
+```{r }
+# SYMBOL到ENTREZID的映射
+down_GSE21422_mRNA<- bitr(DOWN_GSE21422,fromType="SYMBOL", toType="ENTREZID", OrgDb="org.Hs.eg.db")
+dim(down_GSE21422_mRNA)
+down_GSE21422_genelist<-down_GSE21422_mRNA[,2]
+row.names(down_GSE21422_mRNA)<-down_GSE21422_genelist
+
+# KEGG富集分析
+KEGG_GSE21422_down<- enrichKEGG(down_GSE21422_genelist, organism = "hsa", keyType = "kegg", pvalueCutoff = 0.05,qvalueCutoff =1,pAdjustMethod = "none",use_internal_data = FALSE)
+dim(KEGG_GSE21422_down)
+barplot(KEGG_GSE21422_down,showCategory=10)
+KEGG_GSE21422_down_df<-data.frame(KEGG_GSE21422_down)
+
+# 映射回去
+genesymbol<-c()
+for(i in 1:nrow(KEGG_GSE21422_down_df)){
+  geneID<-KEGG_GSE21422_down_df[i,"geneID"]
+  geneID<-unlist(strsplit(geneID,"/"))
+  genename<-down_GSE21422_mRNA[geneID,1]
+  genename<-paste(genename, collapse =",")
+  genesymbol<-c(genesymbol,genename)
+}
+KEGG_GSE21422_down_df_final<-cbind(KEGG_GSE21422_down_df,genesymbol)
+
+# 写入工作路径
+write.table(KEGG_GSE21422_down_df_final,"KEGGenrich_GSE21422Down.txt",quote=FALSE,row.names=FALSE,sep="\t")
+```
+
+GSEA富集分析
+
+```{r}
+library(clusterProfiler)
+suppressMessages(library(org.Hs.eg.db))
+# 上下调基因全部映射
+GSE21422_mRNA<-bitr(row.names(GSE21422_Gene1), fromType="SYMBOL", toType="ENTREZID", OrgDb="org.Hs.eg.db")
+# 计算基因数量
+dim(GSE21422_mRNA)
+# 行名换成基因symbol
+GSE21422_mRNA1 <- GSE21422_mRNA[GSE21422_mRNA$SYMBOL!='HBD', ]
+row.names(GSE21422_mRNA1)<-as.character(GSE21422_mRNA1[,1])
+
+# 将原始表达矩阵和 ID 转换结果按行名合并
+GSE21422_GSEA<-cbind(GSE21422_Gene1[row.names(GSE21422_mRNA1),],GSE21422_mRNA1)
+# 仅保留 ENTREZID 和 logFC 两列
+GSE21422_GSEA<-GSE21422_GSEA[,c("ENTREZID","logFC")]
+# 按 logFC 从大到小排序
+GSE21422_GSEA<-GSE21422_GSEA[order(GSE21422_GSEA$logFC,decreasing = TRUE),]
+# 将行名设为 ENTREZID
+row.names(GSE21422_GSEA)<-GSE21422_GSEA[,1]
+# 按照GSEA要求构建命名向量(ID-->logFC)
+GSE21422_GSEA_FC<-GSE21422_GSEA[,2]
+names(GSE21422_GSEA_FC)<-row.names(GSE21422_GSEA)
+
+# 执行 GSEA，基于 KEGG 数据库
+# 选择人类基因；置换检验1000次；显著性p值选择0.3；不进行p值校正
+gsea_GSE21422<-gseKEGG(GSE21422_GSEA_FC,organism = "hsa", keyType = "kegg", nPerm = 1000,
+                       pvalueCutoff =0.3, pAdjustMethod = "none")
+# 显示显著通路的数量
+dim(gsea_GSE21422)
+
+library(enrichplot)
+# 可视化
+# 绘制排名第一的富集通路；显示该通路的描述信息；不显示 p 值表格
+gseaplot2(gsea_GSE21422,row.names(data.frame(gsea_GSE21422))[1],
+          title = data.frame(gsea_GSE21422)[1,"Description"],pvalue_table =FALSE)
+# 同理
+gseaplot2(gsea_GSE21422,row.names(data.frame(gsea_GSE21422))[2],
+          title = data.frame(gsea_GSE21422)[2,"Description"],pvalue_table =FALSE)
+gseaplot2(gsea_GSE21422,row.names(data.frame(gsea_GSE21422))[3],
+          title = data.frame(gsea_GSE21422)[3,"Description"],pvalue_table =FALSE)
+# 绘制所有通路的合并图
+# gseaplot2(gsea_GSE21422,row.names(data.frame(gsea_GSE21422)),pvalue_table =FALSE)
+
+# 提取核心基因
+gsea_GSE21422_df<-data.frame(gsea_GSE21422)
+# 行名改为ENTREZID，便于映射
+row.names(GSE21422_mRNA1)<-GSE21422_mRNA1[,2]
+# 初始化向量储存GSEA分析的基因
+genesymbol<-c()
+for(i in 1:nrow(gsea_GSE21422_df)){
+  # 从 core_enrichment 列提取核心基因
+  geneID<-gsea_GSE21422_df[i,"core_enrichment"]
+  # 分割字符串，得到单个基因ID
+  geneID<-unlist(strsplit(geneID,"/"))
+  # 映射回基因symbol
+  genename<-GSE21422_mRNA1[geneID,1]
+  # 将Symbol合并为逗号分隔的字符串
+  genename<-paste(genename, collapse =",")
+  # 装入向量中
+  genesymbol<-c(genesymbol,genename)
+}
+# 将核心基因Symbol列合并到GSEA结果中
+gsea_GSE21422_df_final<-cbind(gsea_GSE21422_df,genesymbol)
+# 写入工作路径
+write.table(gsea_GSE21422_df_final,"GSEAenrich_GSE21422.txt",
+            quote=FALSE,row.names=FALSE,sep="\t")
+```
+
+

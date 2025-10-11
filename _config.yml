@@ -1,0 +1,7 @@
+theme: jekyll-theme-minimal
+plugins:
+  - jekyll-seo-tag
+css:
+  - /assets/css/style.css
+head_scripts:
+  - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css
