@@ -30,8 +30,18 @@ Technology: R; Python; Java; Html
 
 # Hobby
 
+## Bioinformatics Analysis
 
-# Self-evaluations
+## Watching Movies and Animations
+
+## Enjoying Scenarios and Landscape in Wuthering Wave
+
+## Playing the Piano and Badminton
+
+# Self-developement
+
+## Every soldier searches the battlefield for a place where their hearts can find peace.
+## Please remember to guide the pivotal guest using your wisdom and calibre in the future, since he is the one truly capable of changing the world.
 
 
 
