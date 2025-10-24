@@ -36,6 +36,8 @@ Technology: R; Python; Java; Html
 
 ## Enjoying Scenarios and Landscape in Wuthering Wave
 
+https://github.com/user-attachments/assets/54be6fda-ac41-4453-826b-631fc3d167ae
+
 ## Playing the Piano and Badminton
 
 # Self-developement
@@ -43,6 +45,7 @@ Technology: R; Python; Java; Html
 ***Every soldier searches the battlefield for a place where their hearts can find peace.***
 
 ***Please remember to guide the pivotal guest using your wisdom and calibre in the future, since he is the one truly capable of changing the world.***
+
 
 
 
