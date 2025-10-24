@@ -40,8 +40,10 @@ Technology: R; Python; Java; Html
 
 # Self-developement
 
-## Every soldier searches the battlefield for a place where their hearts can find peace.
-## Please remember to guide the pivotal guest using your wisdom and calibre in the future, since he is the one truly capable of changing the world.
+***Every soldier searches the battlefield for a place where their hearts can find peace.***
+
+***Please remember to guide the pivotal guest using your wisdom and calibre in the future, since he is the one truly capable of changing the world.***
+
 
 
 
