@@ -55,6 +55,9 @@ https://github.com/user-attachments/assets/54be6fda-ac41-4453-826b-631fc3d167ae
 
 ***Please remember to guide the pivotal guest using your wisdom and calibre in the future, since he is the one truly capable of changing the world.***
 
+***If your heart has no place to perch, you will always be a drifter no matter where you are.***
+
+
 
 
 
