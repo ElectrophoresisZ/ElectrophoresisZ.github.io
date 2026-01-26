@@ -1,5 +1,5 @@
 # Feiyang Zhang
-### Emali: s2769274@ed.ac.uk
+### Emali: feiyang.24@intl.zju.edu.cn
 
 # Resume
 
@@ -31,31 +31,32 @@ Technology: R; Python; Java; Html
 
 
 ------------------------------------------------------------------------------------------------------
-Next part shows my hobbies and development. Up to now, I still believe that learning is the greatest ability for human and I will cultivate it along my whole life.
-
-# Hobby
-
-## Bioinformatics Analysis
-Single-cell omics; Modeling using machine learning methods
-
-## Watching Movies and Animations
-***WorldEnd: What do you do at the end of the world? Are you busy? Will you save us?***
-
-***Sword Art Online***
-
-## Enjoying Scenarios and Landscape in Wuthering Wave
+# Significative Things in Life
 
 https://github.com/user-attachments/assets/54be6fda-ac41-4453-826b-631fc3d167ae
 
-## Playing the Piano and Badminton
-
 # Self-developement
+
+## Learning
+English
+Mathematics
+Biology
+Coding
+
+## Life
+News
+Sports
+Gaming
+Video-cutting
+
+# Spiritual Growth
 
 ***Every soldier searches the battlefield for a place where their hearts can find peace.***
 
 ***Please remember to guide the pivotal guest using your wisdom and calibre in the future, since he is the one truly capable of changing the world.***
 
 ***If your heart has no place to perch, you will always be a drifter no matter where you are.***
+
 
 
 
